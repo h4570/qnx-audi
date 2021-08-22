@@ -1,0 +1,54 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Download SD logs",
+            "runOptions": {
+                "instanceLimit": 1
+            },
+            "command": "./scripts/download-sd-logs.ps1",
+        },
+        {
+            "type": "shell",
+            "label": "SHLE - Compile & deploy",
+            "runOptions": {
+                "instanceLimit": 2
+            },
+            "command": "make debug-shle && ../scripts/deploy-sd.ps1 dbg-shle.elf",
+            "options": {
+                "cwd": "src/"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "autoDetect",
+                    "src/"
+                ]
+            },
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "x86 - Compile",
+            "runOptions": {
+                "instanceLimit": 2
+            },
+            "command": "make debug-x86",
+            "options": {
+                "cwd": "src/"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "autoDetect",
+                    "src/"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+    ]
+}

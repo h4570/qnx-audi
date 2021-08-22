@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "QNX",
+            "includePath": [
+                "${workspaceFolder}/src/**",
+                "C:/QNX632/target/qnx6/usr/include/**"
+            ],
+            "defines": [
+                "NDEBUG",
+                "__QNXNTO__",
+                "__X86__"
+            ],
+            "compilerPath": "C:/QNX632/host/win32/x86/usr/bin/qcc",
+            "cppStandard": "c++98",
+            "intelliSenseMode": "gcc-x86",
+            "compilerArgs": [
+                "-c",
+                "-Wc,-Wall",
+                "-Wc,-Wno-parentheses",
+                "-Vgcc_ntox86"
+            ]
+        }
+    ],
+    "version": 4
+}
