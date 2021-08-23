@@ -3,11 +3,11 @@
         {
             "name": "QNX",
             "includePath": [
-                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/include/**",
                 "C:/QNX632/target/qnx6/usr/include/**"
             ],
             "defines": [
-                "NDEBUG",
+                "ARCH_X86",
                 "__QNXNTO__",
                 "__X86__"
             ],
