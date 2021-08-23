@@ -17,10 +17,12 @@
 
 #include <cstdlib>
 #include "utils/debug.hh"
+#include "modules/screen.hh"
 
 int main(int argc, char *argv[])
 {
-  assert(false, "Hello!");
-  log("Hello!");
+  Screen screen;
+  screen.init();
+  screen.uninit();
   return EXIT_SUCCESS;
 }

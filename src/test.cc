@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include <gf/gf.h>
+
 #include <gf/gf3d.h>
 #include <GLES/gl.h>
 #include <GLES/egl.h>
