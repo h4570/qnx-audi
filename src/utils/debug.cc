@@ -27,6 +27,7 @@ void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((
 
 #endif // ARCH_X86
 #else  // NDEBUG
+#include <stdlib.h>
 #ifdef ARCH_X86
 
 // ----
@@ -38,7 +39,10 @@ void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((
 void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line)
 {
     if (!t_condition)
+    {
         fprintf(stderr, "Assertion failed: %s | %s:%d\n", t_message, t_file, t_line);
+        exit(1);
+    }
 }
 
 void Debug::_log(const char *t_message, const char *t_file, const int &t_line)
@@ -63,6 +67,7 @@ void Debug::_assert(const bool &t_condition, const char *t_message, const char *
         myfile.open(AUDI_LOGS_FILE, std::ios_base::app);
         myfile << "Assertion failed: " << t_message << " | " << t_file << ":" << t_line << "\n";
         myfile.close();
+        exit(1);
     }
 }
 
