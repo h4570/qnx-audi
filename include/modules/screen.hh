@@ -53,13 +53,13 @@ private:
     gf_layer_info_t m_gfLayerInfo;
     gf_3d_target_t m_gf3DTarget;
 
-    EGLContext m_EGLContext;
-    EGLConfig m_EGLConfig;
+    EGLContext m_eglContext;
+    EGLConfig m_eglConfig;
 
     bool m_isInitialized;
     int m_layerIndex;
     GLuint m_width, m_height;
-    EGLint m_EGLConfigNumber;
+    EGLint m_eglConfigNumber;
     EGLint *m_attributes;
 
     void attachDevice();

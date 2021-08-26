@@ -16,7 +16,7 @@ Screen::Screen()
     m_layerIndex = 0;
     m_width = 0;
     m_height = 0;
-    m_EGLConfigNumber = 0;
+    m_eglConfigNumber = 0;
     m_isInitialized = false;
 
     m_attributes = new EGLint[11]();
@@ -253,10 +253,10 @@ bool Screen::__searchForLayer(const int &t_formatIndex)
 
 bool Screen::__searchForEGLConfig()
 {
-    int res = eglChooseConfig(Display, m_attributes, &m_EGLConfig, 1, &m_EGLConfigNumber) == EGL_TRUE;
+    int res = eglChooseConfig(Display, m_attributes, &m_eglConfig, 1, &m_eglConfigNumber) == EGL_TRUE;
     if (res == EGL_TRUE)
     {
-        if (m_EGLConfigNumber > 0)
+        if (m_eglConfigNumber > 0)
         {
             log("EGL configuration found");
             return true;
@@ -310,8 +310,8 @@ void Screen::enableLayer()
 
 void Screen::createEGLContext()
 {
-    m_EGLContext = eglCreateContext(Display, m_EGLConfig, EGL_NO_CONTEXT, NULL);
-    if (m_EGLContext == NULL)
+    m_eglContext = eglCreateContext(Display, m_eglConfig, EGL_NO_CONTEXT, NULL);
+    if (m_eglContext == NULL)
     {
         assert(false, "EGL context creation failed");
         return;
@@ -321,14 +321,14 @@ void Screen::createEGLContext()
 
 void Screen::destroyEGLContext()
 {
-    assert(m_EGLContext != NULL, "EGL context not created");
-    eglDestroyContext(Display, m_EGLContext);
+    assert(m_eglContext != NULL, "EGL context not created");
+    eglDestroyContext(Display, m_eglContext);
     log("EGL context destroyed");
 }
 
 void Screen::createEGLSurface()
 {
-    Surface = eglCreateWindowSurface(Display, m_EGLConfig, m_gf3DTarget, NULL);
+    Surface = eglCreateWindowSurface(Display, m_eglConfig, m_gf3DTarget, NULL);
     if (Surface == NULL)
     {
         assert(false, "EGL surface creation failed");
@@ -346,7 +346,7 @@ void Screen::destroyEGLSurface()
 
 void Screen::connectEGLContextWithSurface()
 {
-    EGLBoolean res = eglMakeCurrent(Display, Surface, Surface, m_EGLContext);
+    EGLBoolean res = eglMakeCurrent(Display, Surface, Surface, m_eglContext);
     if (res == NULL)
     {
         assert(false, "EGL context connection with surface failed");
