@@ -40,6 +40,7 @@ void Debug::_assert(const bool &t_condition, const char *t_message, const char *
 {
     if (!t_condition)
     {
+        fprintf(stdout, "Assertion failed: %s | %s:%d\n", t_message, t_file, t_line);
         fprintf(stderr, "Assertion failed: %s | %s:%d\n", t_message, t_file, t_line);
         exit(1);
     }
