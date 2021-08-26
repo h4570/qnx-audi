@@ -9,9 +9,12 @@
             "defines": [
                 "ARCH_X86",
                 "__QNXNTO__",
-                "__X86__"
+                "__BEGIN_DECLS=",
+                "__END_DECLS=",
+                "_uint32=unsigned int",
+                "__X86__" // komentarze w gl.h
             ],
-            "compilerPath": "C:/QNX632/host/win32/x86/usr/bin/qcc",
+            "compilerPath": "C:/QNX632/host/win32/x86/usr/bin/qcc.exe",
             "cppStandard": "c++98",
             "intelliSenseMode": "gcc-x86",
             "compilerArgs": [

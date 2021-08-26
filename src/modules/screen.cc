@@ -264,6 +264,7 @@ bool Screen::__searchForEGLConfig()
         return false;
     }
     assert(false, "EGL configuration search failed");
+    return false;
 }
 
 void Screen::create3DTarget()
