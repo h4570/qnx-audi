@@ -42,6 +42,19 @@
         "xlocmon": "cpp",
         "xloctime": "cpp",
         "xmemory": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "vector": "cpp",
+        "atomic": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "cstdint": "cpp",
+        "initializer_list": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "xfacet": "cpp",
+        "xlocbuf": "cpp",
+        "xtr1common": "cpp"
     }
 }

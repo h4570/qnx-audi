@@ -6,8 +6,10 @@ QNX632_DIR = C:/QNX632
 QCC_LIBS = -lc -lGLES_CM -lgf
 QCC_INCS = -I$(PROJECT_DIR)/include -I$(QNX632_DIR)/target/qnx6/usr/include
 QCC_CUSTOM_FLAGS = 
-QCC_OBJS =	main.o				\
-			modules/screen.o	\
+QCC_OBJS =	main.o					\
+			loaders/bmp_loader.o	\
+			models/texture.o		\
+			modules/screen.o		\
 			utils/debug.o
 
 # ---
