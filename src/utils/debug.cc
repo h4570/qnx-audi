@@ -7,6 +7,11 @@
 #include "utils/debug.hh"
 
 #ifdef NDEBUG
+
+// ----
+// Release mode, all
+// ----
+
 #ifdef ARCH_X86
 
 // ----
@@ -27,7 +32,25 @@ void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((
 
 #endif // ARCH_X86
 #else  // NDEBUG
+
+// ----
+// Debug mode, all
+// ----
+
 #include <stdlib.h>
+#include <stdio.h>
+#include <GLES/gl.h>
+
+void Debug::_checkOpenGLError(const char *t_statement, const char *t_name, const int &t_line)
+{
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR)
+    {
+        printf("OpenGL error %08x, at %s:%i - for %s\n", err, t_name, t_line, t_statement);
+        exit(1);
+    }
+}
+
 #ifdef ARCH_X86
 
 // ----
