@@ -16,11 +16,7 @@ enum TextureType
     TEX_TYPE_RGBA
 };
 
-/** 
- * Class which contains texture data.
- * Textures are paired with meshes/sprites via addLink() and 
- * removeLink() functions which use meshId/spriteId and materialId (for mesh).
- */
+/** Class which contains texture data. */
 class Texture
 {
 
@@ -32,12 +28,7 @@ public:
     // Getters
     // ----
 
-    /** 
-     * Auto generated unique Id. 
-     * Core role of this variable is to dont send 
-     * again texture in renderer, when last sent texture id
-     * by renderer will be equal to this id.
-     */
+    /** Auto generated unique Id. */
     inline const uint32_t getId() const { return m_id; };
 
     inline const uint16_t getWidth() const { return m_width; };
@@ -47,50 +38,26 @@ public:
     inline const TextureType getType() const { return m_type; };
 
     /** 
-     * Returns always width * width * 3/4. 
+     * Returns always width * width * (3 OR 4). 
      * 3 for RGB, 4 for RGBA.
      */
     inline const uint32_t getDataSize() const { return m_type == TEX_TYPE_RGB ? m_width * m_height * 3 : m_width * m_height * 4; };
 
-    /** 
-     * Texture data, used by renderer.
-     * Array of size getDataSize().
-     */
     inline const unsigned char *getData() const { return m_data; };
 
-    /** 
-     * Get texture name.
-     * For "textures/abc.bmp" result will be: "abc"
-     */
     inline const std::string getName() const { return m_name; };
 
     // ----
     //  Setters
     // ----
 
-    /** 
-     * Set texture size and allocate texture data
-     * Do not call this method unless you know what you do.
-     * Should be called by data loader. 
-     */
+    /** Set texture size and allocate texture data. Should be called by data loader. */
     void allocateMemory(const uint16_t &t_width, const uint16_t &t_height, const TextureType &t_type);
 
-    /** 
-     * Do not call this method unless you know what you do.
-     * Should be called by data loader. 
-     */
-    void setHeight(const uint16_t &t_val) { m_height = t_val; }
-
-    /** 
-     * Do not call this method unless you know what you do.
-     * Should be called by data loader. 
-     */
+    /** Image data. Should be called by data loader. */
     void setData(const uint32_t &t_index, const unsigned char &t_val);
 
-    /** 
-     * Set texture name. 
-     * Should be the file name without extension
-     */
+    /** Texture name. Should be called by data loader. */
     void setName(const char *t_val);
 
     // ----
