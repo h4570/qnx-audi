@@ -22,7 +22,7 @@ public:
 // ----
 
 #define assert(condition, message) Debug::_assert(condition, message, __FILE__, __LINE__)
-#define log(message) Debug::_log(message, __FILE__, __LINE__)
+#define logMessage(message) Debug::_log(message, __FILE__, __LINE__)
 
 #ifdef NDEBUG
 

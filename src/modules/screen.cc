@@ -77,7 +77,7 @@ void Screen::attachDevice()
     int res = gf_dev_attach(&m_gfDevice, GF_DEVICE_INDEX(0), &m_gfDeviceInfo);
     if (res == GF_ERR_OK)
     {
-        log("Device attached");
+        logMessage("Device attached");
         return;
     }
     switch (res)
@@ -110,7 +110,7 @@ void Screen::detachDevice()
 {
     assert(m_gfDevice != NULL, "Device not attached");
     gf_dev_detach(m_gfDevice);
-    log("Device detached");
+    logMessage("Device detached");
 }
 
 void Screen::attachDisplay()
@@ -121,7 +121,7 @@ void Screen::attachDisplay()
         m_layerIndex = m_gfDisplayInfo.main_layer_index;
         m_width = m_gfDisplayInfo.xres;
         m_height = m_gfDisplayInfo.yres;
-        log("Display attached");
+        logMessage("Display attached");
         return;
     }
     switch (res)
@@ -148,7 +148,7 @@ void Screen::detachDisplay()
 {
     assert(m_gfDisplay != NULL, "Display not attached");
     gf_display_detach(m_gfDisplay);
-    log("Display detached");
+    logMessage("Display detached");
 }
 
 void Screen::setEGLDisplayConnection()
@@ -159,7 +159,7 @@ void Screen::setEGLDisplayConnection()
         assert(false, "EGL display connection failed");
         return;
     }
-    log("EGL display connected");
+    logMessage("EGL display connected");
 }
 
 void Screen::attachLayer()
@@ -167,7 +167,7 @@ void Screen::attachLayer()
     int res = gf_layer_attach(&m_gfLayer, m_gfDisplay, m_layerIndex, GF_LAYER_ATTACH_PASSIVE);
     if (res == GF_ERR_OK)
     {
-        log("Layer attached");
+        logMessage("Layer attached");
         return;
     }
     switch (res)
@@ -194,7 +194,7 @@ void Screen::detachLayer()
 {
     assert(m_gfLayer != NULL, "Layer not attached");
     gf_layer_detach(m_gfLayer);
-    log("Layer detached");
+    logMessage("Layer detached");
 }
 
 void Screen::initEGLDisplayConnection()
@@ -205,7 +205,7 @@ void Screen::initEGLDisplayConnection()
         assert(false, "EGL display connection initialize failed");
         return;
     }
-    log("EGL display connection initialized");
+    logMessage("EGL display connection initialized");
 }
 
 void Screen::searchForLayerAndEGLConfig()
@@ -231,7 +231,7 @@ bool Screen::__searchForLayer(const int &t_formatIndex)
     int res = gf_layer_query(m_gfLayer, t_formatIndex, &m_gfLayerInfo);
     if (res == GF_ERR_OK)
     {
-        log("Layer query was successful");
+        logMessage("Layer query was successful");
         return true;
     }
     switch (res)
@@ -258,7 +258,7 @@ bool Screen::__searchForEGLConfig()
     {
         if (m_eglConfigNumber > 0)
         {
-            log("EGL configuration found");
+            logMessage("EGL configuration found");
             return true;
         }
         return false;
@@ -272,7 +272,7 @@ void Screen::create3DTarget()
     int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, NULL, 0, m_width, m_height, m_gfLayerInfo.format);
     if (res == GF_ERR_OK)
     {
-        log("3D target created");
+        logMessage("3D target created");
         return;
     }
     switch (res)
@@ -290,7 +290,7 @@ void Screen::free3DTarget()
 {
     assert(m_gf3DTarget != NULL, "3D target not created");
     gf_3d_target_free(m_gf3DTarget);
-    log("3D target freed");
+    logMessage("3D target freed");
 }
 
 void Screen::enableLayer()
@@ -305,7 +305,7 @@ void Screen::enableLayer()
 	 * Later, the OpenGL ES library calls will call gf_layer_update()
 	 * internally, when  displaying the rendered 3D content.
 	 */
-    log("Layer enabled");
+    logMessage("Layer enabled");
 }
 
 void Screen::createEGLContext()
@@ -316,14 +316,14 @@ void Screen::createEGLContext()
         assert(false, "EGL context creation failed");
         return;
     }
-    log("EGL context created");
+    logMessage("EGL context created");
 }
 
 void Screen::destroyEGLContext()
 {
     assert(m_eglContext != NULL, "EGL context not created");
     eglDestroyContext(Display, m_eglContext);
-    log("EGL context destroyed");
+    logMessage("EGL context destroyed");
 }
 
 void Screen::createEGLSurface()
@@ -334,14 +334,14 @@ void Screen::createEGLSurface()
         assert(false, "EGL surface creation failed");
         return;
     }
-    log("EGL surface created");
+    logMessage("EGL surface created");
 }
 
 void Screen::destroyEGLSurface()
 {
     assert(Surface != NULL, "EGL surface not created");
     eglDestroySurface(Display, Surface);
-    log("EGL surface destroyed");
+    logMessage("EGL surface destroyed");
 }
 
 void Screen::connectEGLContextWithSurface()
@@ -352,5 +352,5 @@ void Screen::connectEGLContextWithSurface()
         assert(false, "EGL context connection with surface failed");
         return;
     }
-    log("EGL context connected with surface");
+    logMessage("EGL context connected with surface");
 }
