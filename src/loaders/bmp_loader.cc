@@ -42,7 +42,8 @@ void BmpLoader::load(Texture &o_texture, char *t_subfolder, char *t_name, char *
 
     assert(bits == 24, "Invalid bits per pixel in .bmp file - expected 24!");
 
-    o_texture.setSize(width, height, TEX_TYPE_RGB);
+    o_texture.allocateMemory(width, height, TEX_TYPE_RGB);
+    o_texture.setName(t_name);
     printf("BMPLoader - width: %d | height: %d | bits: %d\n", width, height, bits);
 
     uint64_t rowPadded = (width * 3 + 3) & (~3);
@@ -55,7 +56,7 @@ void BmpLoader::load(Texture &o_texture, char *t_subfolder, char *t_name, char *
     uint32_t x = 0;
     for (uint32_t i = 0; i < height; i++)
     {
-        fread(&row, sizeof(unsigned char), rowPadded, file);
+        fread(row, sizeof(unsigned char), rowPadded, file);
         for (uint32_t j = 0; j < width * 3; j += 3)
         {
             // Convert (B, G, R) to (R, G, B)

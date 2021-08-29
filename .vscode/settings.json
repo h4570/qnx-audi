@@ -55,6 +55,7 @@
         "type_traits": "cpp",
         "xfacet": "cpp",
         "xlocbuf": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "*.rh": "cpp"
     }
 }

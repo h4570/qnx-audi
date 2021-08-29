@@ -18,6 +18,7 @@
 #include <cstdlib>
 #include "utils/debug.hh"
 #include "modules/screen.hh"
+#include "loaders/bmp_loader.hh"
 
 void render()
 {
@@ -31,17 +32,22 @@ void render()
   const GLfloat line[] = {
       0, 0,    //point A
       50, 200, //point B
+      0, 200,  //point B
   };
 
-  glColor4f(0.0f, 1.0f, 0.0f, 1.0f); //line color
+  glColor4f(1.0f, 0.0f, 0.0f, 1.0f); //line color
   glVertexPointer(2, GL_FLOAT, 0, line);
   glEnableClientState(GL_VERTEX_ARRAY);
 
-  glDrawArrays(GL_LINES, 0, 2);
+  glDrawArrays(GL_TRIANGLES, 0, 3);
 };
 
 int main(int argc, char *argv[])
 {
+  BmpLoader bmpLoader;
+  Texture texture;
+  bmpLoader.load(texture, "", "car", ".bmp");
+
   Screen screen;
   screen.init();
 
@@ -50,15 +56,15 @@ int main(int argc, char *argv[])
     assert(false, "OpenGL calls gone wrong");
 
   // do
-  for (int xd = 0; xd < 10000; xd++)
-  {
-    if (xd % 1000 == 0)
-      log("Im here!\n");
-    render();
-    glFinish();
-    eglWaitGL();
-    eglSwapBuffers(screen.Display, screen.Surface);
-  }
+  // for (int xd = 0; xd < 300; xd++)
+  // {
+  // if (xd % 100 == 0)
+  // log("Im here!\n");
+  render();
+  glFinish();
+  eglWaitGL();
+  eglSwapBuffers(screen.Display, screen.Surface);
+  // }
   // } while (1);
 
   screen.uninit();
