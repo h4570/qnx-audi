@@ -10,8 +10,13 @@
                 "ARCH_X86",
                 "__QNXNTO__",
                 "__BEGIN_DECLS=",
+                "_FILE_OFFSET_BITS=64",
+                "_LARGEFILE64_SOURCE=1",
+                "__EXT_UNIX_MISC",
+                "__EXT_QNX",
                 "__END_DECLS=",
                 "_uint32=unsigned int",
+                "_Uint64t=unsigned long",
                 "__X86__" // komentarze w gl.h
             ],
             "compilerPath": "C:/QNX632/host/win32/x86/usr/bin/qcc.exe",
