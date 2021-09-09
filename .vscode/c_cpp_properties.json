@@ -14,9 +14,9 @@
                 // "__EXT_POSIX1_200112",// komentarze w time.h
                 "_FILE_OFFSET_BITS=64",
                 "_LARGEFILE64_SOURCE=1",
-                "__INLINE_FUNCTIONS__",
                 "__PID_T",
                 "pid_t=_Ssizet",
+                "close(fd) void close(int fd);",
                 "__EXT_UNIX_MISC",
                 "__EXT_POSIX1_198808",
                 "__EXT_QNX",
