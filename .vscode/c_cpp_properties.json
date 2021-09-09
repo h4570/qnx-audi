@@ -8,16 +8,23 @@
             ],
             "defines": [
                 "ARCH_X86",
+                "DUMB_INTELISENSE",
                 "__QNXNTO__",
                 "__BEGIN_DECLS=",
+                // "__EXT_POSIX1_200112",// komentarze w time.h
                 "_FILE_OFFSET_BITS=64",
                 "_LARGEFILE64_SOURCE=1",
+                "__INLINE_FUNCTIONS__",
+                "__PID_T",
+                "pid_t=_Ssizet",
                 "__EXT_UNIX_MISC",
+                "__EXT_POSIX1_198808",
                 "__EXT_QNX",
                 "__END_DECLS=",
                 "_uint32=unsigned int",
                 "_Uint64t=unsigned long",
                 "__X86__" // komentarze w gl.h
+                // komentarze w process.h
             ],
             "compilerPath": "C:/QNX632/host/win32/x86/usr/bin/qcc.exe",
             "cppStandard": "c++98",

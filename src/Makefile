@@ -7,8 +7,9 @@ QCC_LIBS = -lc -lGLES_CM -lgf
 QCC_INCS = -I$(PROJECT_DIR)/include -I$(QNX632_DIR)/target/qnx6/usr/include
 QCC_CUSTOM_FLAGS = 
 QCC_OBJS =	main.o					\
+			external/com_stack.o	\
+			external/lmgr.o			\
 			models/texture.o		\
-			modules/audi.o			\
 			modules/screen.o		\
 			utils/debug.o
 
