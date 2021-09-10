@@ -57,6 +57,31 @@ extern "C"
         logMessage("[Audi] - lmgrGetVfb: Success!");
     }
 
+    void lmgrTalkToLayerManager(int *inputData, int inputDataSize, int param3)
+    {
+        const int command = 0x800c0505;
+        int dwords = (2 + inputDataSize) * 4;
+        if (inputDataSize == 0)
+            dwords = 3;
+
+        assert(inputDataSize == 0 || inputData != NULL, "lmgrTalkToLayerManager failed: Wrong input parameter!");
+
+        int *data = new int[dwords];
+        assert(data != NULL, "lmgrTalkToLayerManager failed: Out of memory!");
+        data[0] = param3;
+        data[1] = inputDataSize;
+
+        if (inputDataSize == 0)
+            data[2] = 0;
+        else
+            for (int i = 0; i < inputDataSize; i++)
+                data[2 + i] = inputData[i];
+
+        comStackSend(command, data, dwords * 4);
+        delete[] data;
+        logMessage("[Audi] - lmgrTalkToLayerManager: Success!");
+    }
+
 #ifdef __cplusplus
 }
 #endif

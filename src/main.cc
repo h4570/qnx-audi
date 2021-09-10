@@ -20,7 +20,7 @@
 
 int main(int argc, char *argv[])
 {
-  int lmgrParam1 = 40;
+  int lmgrParam1[3] = {40, 16, 19};
   unsigned int lmgrParam2, lmgrParam3 = 0;
   int sid[3];
 
@@ -28,12 +28,13 @@ int main(int argc, char *argv[])
   // gf_display_attach
   comStackConnect();
   lmgrCheckVersion();
-  lmgrRegisterDisplayable(lmgrParam1, lmgrParam2, lmgrParam3, 2);
-  lmgrGetVfb(lmgrParam1, sid);
+  lmgrRegisterDisplayable(lmgrParam1[0], lmgrParam2, lmgrParam3, 2);
+  lmgrGetVfb(lmgrParam1[0], sid);
   // gf_context_create
   // gf_surface_attach_by_sid
-  // draw
-  lmgrUpdateVfb(lmgrParam1);
+  // OPENGL - DRAW
+  lmgrUpdateVfb(lmgrParam1[0]);
+  lmgrTalkToLayerManager(lmgrParam1, 3, 0);
   comStackDisconnect();
 
   return 0;

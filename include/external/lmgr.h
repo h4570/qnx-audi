@@ -22,6 +22,7 @@ extern "C"
     void lmgrRegisterDisplayable(int param1, unsigned int param2, unsigned int param3, int param4);
     void lmgrGetVfb(int param, int *sid);
     void lmgrUpdateVfb(int param);
+    void lmgrTalkToLayerManager(int *inputData, int inputDataSize, int param3);
 
 #ifdef __cplusplus
 }

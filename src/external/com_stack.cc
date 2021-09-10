@@ -87,7 +87,7 @@ extern "C"
             assert(false, "Uninitialized file descriptor! Thread was either not connected or already disconnected!");
             return;
         }
-        if (*threadKeyValue == -1)
+        else if (*threadKeyValue == -1)
         {
             printf("comStackSend: Thread (tid=%d), process (pid=%d)\n", pthread_self(), getpid());
             assert(false, "Invalid file descriptor!");
