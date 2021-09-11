@@ -96,7 +96,7 @@ void ComStack::disconnect()
     assert(data != NULL, "comStackDisconnect: Not connected yet or already disconnected!");
 
     int result = closeConnection(*data);
-    assert(result == 1, "comStackDisconnect: comStackClose() failed!");
+    assert(result == 0, "comStackDisconnect: comStackClose() failed!");
     free(data);
     pthread_setspecific(m_key, NULL);
 
@@ -162,7 +162,7 @@ int ComStack::openConnection(const char *device)
         do
         {
             result = open(device, 0x2002);
-            if (-1 < result)
+            if (result > -1)
                 return result;
             status = *__get_errno_ptr();
         } while (status == 4);
@@ -184,12 +184,12 @@ int ComStack::closeConnection(const int fd)
     do
     {
         result = close(fd);
-        if (-1 < result)
+        if (result > -1)
             return result;
         status = *__get_errno_ptr();
     } while (status == 4);
-    if ((result == 0x59) || (result == 0))
-        status = 1;
+    if (result == 0x59 || result == 0)
+        return 0;
     if (status)
     {
         printf("comStackClose: Thread (tid=%d), process (pid=%d), error %d: %s\n", pthread_self(), getpid(), status, strerror(status));

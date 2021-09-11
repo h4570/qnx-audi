@@ -20,6 +20,9 @@
 
 void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line)((void)0);
 void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((void)0);
+void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line)((void)0);
+void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line)((void)0);
+void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)((void)0);
 
 #else // ARCH_X86
 
@@ -29,6 +32,9 @@ void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((
 
 void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line)((void)0);
 void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((void)0);
+void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line)((void)0);
+void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line)((void)0);
+void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)((void)0);
 
 #endif // ARCH_X86
 #else  // NDEBUG
@@ -57,8 +63,6 @@ void Debug::_checkOpenGLError(const char *t_statement, const char *t_name, const
 // Debug mode, x86
 // ----
 
-#include <stdio.h>
-
 void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line)
 {
     if (!t_condition)
@@ -72,6 +76,21 @@ void Debug::_assert(const bool &t_condition, const char *t_message, const char *
 void Debug::_log(const char *t_message, const char *t_file, const int &t_line)
 {
     fprintf(stdout, "Log: %s | %s:%d\n", t_message, t_file, t_line);
+}
+
+void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line)
+{
+    fprintf(stdout, "Log: %s = %d | %s:%d\n", t_key, t_value, t_file, t_line);
+}
+
+void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line)
+{
+    fprintf(stdout, "Log: %s = %d | %s:%d\n", t_key, t_value, t_file, t_line);
+}
+
+void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)
+{
+    fprintf(stdout, "Log: %s = %d | %s:%d\n", t_key, t_value, t_file, t_line);
 }
 
 #else // ARCH_X86
@@ -100,6 +119,30 @@ void Debug::_log(const char *t_message, const char *t_file, const int &t_line)
     std::ofstream myfile;
     myfile.open(AUDI_LOGS_FILE, std::ios_base::app);
     myfile << "Log: " << t_message << " | " << t_file << ":" << t_line << "\n";
+    myfile.close();
+}
+
+void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line)
+{
+    std::ofstream myfile;
+    myfile.open(AUDI_LOGS_FILE, std::ios_base::app);
+    myfile << "Log: " << t_key << " = " << t_value << " | " << t_file << ":" << t_line << "\n";
+    myfile.close();
+}
+
+void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line)
+{
+    std::ofstream myfile;
+    myfile.open(AUDI_LOGS_FILE, std::ios_base::app);
+    myfile << "Log: " << t_key << " = " << t_value << " | " << t_file << ":" << t_line << "\n";
+    myfile.close();
+}
+
+void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)
+{
+    std::ofstream myfile;
+    myfile.open(AUDI_LOGS_FILE, std::ios_base::app);
+    myfile << "Log: " << t_key << " = " << t_value << " | " << t_file << ":" << t_line << "\n";
     myfile.close();
 }
 

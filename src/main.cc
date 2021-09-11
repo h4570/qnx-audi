@@ -17,31 +17,39 @@
 
 #include "utils/debug.hh"
 #include "modules/com_stack.hh"
+#include "modules/ipc_ch8.hh"
 #include "modules/lmgr.hh"
+#include "modules/screen.hh"
 #include "modules/audi.hh"
 
 int main(int argc, char *argv[])
 {
+  Screen screen;
   ComStack comStack;
+  IpcCh8 ipcCh8;
   Lmgr lmgr(&comStack);
   Audi audi(&comStack);
 
   int lmgrParam1[3] = {40, 16, 19};
-  unsigned int lmgrParam2, lmgrParam3 = 0;
   int sid[3];
 
-  // gf_dev_attach
-  // gf_display_attach
+  screen.attachDevice();
+  screen.attachDisplay();
   comStack.connect();
   lmgr.checkVersion();
-  lmgr.registerDisplayable(lmgrParam1[0], lmgrParam2, lmgrParam3, 2);
+  lmgr.registerDisplayable(lmgrParam1[0], screen.m_gfDisplayInfo.xres, screen.m_gfDisplayInfo.yres, 2);
   lmgr.getVfb(lmgrParam1[0], sid);
   // gf_context_create
   // gf_surface_attach_by_sid
   // OPENGL - DRAW
   lmgr.updateVfb(lmgrParam1[0]);
+  audi.unknown(40);
   audi.talkToLayerManager(lmgrParam1, 3, 0);
-  audi.getKey();
+  ipcCh8.connect();
+  ipcCh8.getKey();
+  screen.detachDevice();
+  screen.detachDisplay();
+  ipcCh8.disconnect();
   comStack.disconnect();
 
   return 0;

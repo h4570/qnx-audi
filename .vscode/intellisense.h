@@ -21,6 +21,17 @@
 #define __PTHREAD_ONCE_T int
 #define __PTHREAD_ATTR_T int
 
+// typedef char _int8;
+typedef unsigned char _uint8;
+// typedef short _int16;
+typedef unsigned short _uint16;
+// typedef int _int32;
+typedef unsigned int _uint32;
+// typedef long _int64;
+typedef unsigned long _uint64;
+typedef int *_intptr;
+typedef unsigned int *_uintptr;
+
 typedef char _int8t;
 typedef unsigned char _uint8t;
 typedef short _int16t;
@@ -29,7 +40,8 @@ typedef int _int32t;
 typedef unsigned int _uint32t;
 typedef long _int64t;
 typedef unsigned long _uint64t;
-typedef int *_uintptrt;
+typedef int *_intptrt;
+typedef unsigned int *_uintptrt;
 
 typedef char _Int8t;
 typedef unsigned char _Uint8t;
@@ -52,6 +64,7 @@ extern int abs(int _Left);
 extern int open(const char *a, int b);
 extern int close(int a);
 extern int getpid();
+extern int read(int fd, void *buf, size_t count);
 
 #define RAND_MAX 32767u
 #define EXIT_SUCCESS 0

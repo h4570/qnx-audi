@@ -24,9 +24,10 @@ public:
     //  Other
     // ----
 
-    void talkToLayerManager(int *inputData, const int inputDataSize, const int param3);
+    /** Called not always -> after comStackConnect and before talkToLayerManager with parameter 0x28 */
+    void unknown(const int param);
 
-    void getKey();
+    void talkToLayerManager(int *inputData, const int inputDataSize, const int param3);
 
 private:
     ComStack *m_comStack;

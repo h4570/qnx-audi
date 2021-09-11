@@ -26,7 +26,7 @@ public:
 
     void checkVersion();
 
-    void registerDisplayable(const int param1, const unsigned int param2, const unsigned int param3, const int param4);
+    void registerDisplayable(const int param1, const int param2, const int param3, const int param4);
 
     void getVfb(const int param, int *sid);
 

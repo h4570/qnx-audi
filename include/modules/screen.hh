@@ -44,11 +44,18 @@ public:
     /** Unitialize QNX rendering stuff */
     void uninit();
 
+    // TEMP!!!
+    void attachDevice();
+    void attachDisplay();
+    gf_display_info_t m_gfDisplayInfo;
+    void detachDevice();
+    void detachDisplay();
+    //
+
 private:
     gf_dev_t m_gfDevice;
     gf_dev_info_t m_gfDeviceInfo;
     gf_display_t m_gfDisplay;
-    gf_display_info_t m_gfDisplayInfo;
     gf_layer_t m_gfLayer;
     gf_layer_info_t m_gfLayerInfo;
     gf_3d_target_t m_gf3DTarget;
@@ -62,8 +69,6 @@ private:
     EGLint m_eglConfigNumber;
     EGLint *m_attributes;
 
-    void attachDevice();
-    void attachDisplay();
     void setEGLDisplayConnection();
     void attachLayer();
     void initEGLDisplayConnection();
@@ -74,8 +79,6 @@ private:
     void createEGLSurface();
     void connectEGLContextWithSurface();
 
-    void detachDevice();
-    void detachDisplay();
     void detachLayer();
     void free3DTarget();
     void destroyEGLContext();

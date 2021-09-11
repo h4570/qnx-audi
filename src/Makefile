@@ -10,6 +10,7 @@ QCC_OBJS =	main.o					\
 			models/texture.o		\
 			modules/audi.o			\
 			modules/com_stack.o		\
+			modules/ipc_ch8.o		\
 			modules/lmgr.o			\
 			modules/screen.o		\
 			utils/debug.o
@@ -30,8 +31,8 @@ QCC_DEBUG_LINK_FLAGS = -g
 QCC_X86_LINK_FLAGS = -Vgcc_ntox86
 QCC_SHLE_LINK_FLAGS = -Vgcc_ntosh -Wl,--no-keep-memory -EL
 
-QCC_SHLE_LIB_PATHS = -L. -LC:/QNX632/target/qnx6/shle/lib -LC:/QNX632/target/qnx6/shle/usr/lib
-QCC_x86_LIB_PATHS = -L. -LC:/QNX632/target/qnx6/x86/lib -LC:/QNX632/target/qnx6/x86/usr/lib
+QCC_SHLE_LIB_PATHS = -L. -L$(QNX632_DIR)/target/qnx6/shle/lib -L$(QNX632_DIR)/target/qnx6/shle/usr/lib
+QCC_x86_LIB_PATHS = -L. -L$(QNX632_DIR)/target/qnx6/x86/lib -L$(QNX632_DIR)/target/qnx6/x86/usr/lib
 
 BIN_SHLE_DEBUG = $(PROJECT_DIR)/bin/shle/debug
 BIN_SHLE_RELEASE = $(PROJECT_DIR)/bin/shle/release

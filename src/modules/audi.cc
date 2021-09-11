@@ -26,10 +26,10 @@ void Audi::talkToLayerManager(int *inputData, const int inputDataSize, const int
     if (inputDataSize == 0)
         dwords = 3;
 
-    assert(inputDataSize == 0 || inputData != NULL, "lmgrTalkToLayerManager failed: Wrong input parameter!");
+    assert(inputDataSize == 0 || inputData != NULL, "talkToLayerManager failed: Wrong input parameter!");
 
     int *data = new int[dwords];
-    assert(data != NULL, "lmgrTalkToLayerManager failed: Out of memory!");
+    assert(data != NULL, "talkToLayerManager failed: Out of memory!");
     data[0] = param3;
     data[1] = inputDataSize;
 
@@ -41,26 +41,15 @@ void Audi::talkToLayerManager(int *inputData, const int inputDataSize, const int
 
     m_comStack->send(command, data, dwords * 4);
     delete[] data;
-    logMessage("[Audi] - lmgrTalkToLayerManager: Success!");
+    logMessage("[Audi] - talkToLayerManager: Success!");
 }
 
-void Audi::getKey()
+void Audi::unknown(const int param)
 {
-    // handle = open("/dev/ipc/ch8", 0);
-    // if (handle == -1)
-    // {
-    //     return 0xffffffff;
-    // }
-    // do
-    // {
-    //     if (keycode == 0)
-    //     {
-    //         puts("press any key");
-    //     }
-    //     else
-    //     {
-    //         printf("press key with keycode %d\n", keycode);
-    //     }
-    //     read(handle, &stack0xfffffee0, 0x100);
-    // } while ((keycode != 0) && (uVar4 = FUN_08041e46(&stack0xfffffee0), uVar4 != keycode));
+    const int command = 0x80040501;
+    const int dwords = 1;
+    int data[dwords] = {param};
+
+    m_comStack->send(command, data, dwords * 4);
+    logMessage("[Audi] - unknown: Success!");
 }

@@ -30,7 +30,7 @@ void Lmgr::checkVersion()
     logMessage("[Audi] - lmgrCheckVersion: 1.1!");
 }
 
-void Lmgr::registerDisplayable(const int param1, const unsigned int param2, const unsigned int param3, const int param4)
+void Lmgr::registerDisplayable(const int param1, const int param2, const int param3, const int param4)
 {
     const int command = -0x3febfb00;
     const int dwords = 5;
@@ -63,5 +63,5 @@ void Lmgr::updateVfb(const int param)
     int data[dwords] = {param};
 
     m_comStack->send(command, data, dwords * 4);
-    logMessage("[Audi] - lmgrGetVfb: Success!");
+    logMessage("[Audi] - lmgrUpdateVfb: Success!");
 }
