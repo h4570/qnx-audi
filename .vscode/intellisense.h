@@ -3,10 +3,7 @@
 #define nullptr 0
 #define __INT_BITS__ 32
 #define CLOCK_MONOTONIC 2
-
-#define open(a, b) (int)1
-#define close(a) (int)1
-#define getpid() (pid_t)1
+#define bool char
 
 #define pid_t int
 #define pthread_t int
@@ -48,14 +45,17 @@ typedef unsigned int *_Uintptrt;
 typedef unsigned long long _ULonglong;
 typedef long long _Longlong;
 
-extern void exit( int __status );
+extern void exit(int __status);
 extern long int strtol(const char *__nptr, char **__endptr, int __base);
 extern int rand(void);
 extern int abs(int _Left);
+extern int open(const char *a, int b);
+extern int close(int a);
+extern int getpid();
 
-#define RAND_MAX        32767u
-#define EXIT_SUCCESS    0
-#define EXIT_FAILURE    1
+#define RAND_MAX 32767u
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
 
 #undef _WIN32
 #undef _STDLIB_H_INCLUDED

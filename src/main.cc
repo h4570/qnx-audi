@@ -16,26 +16,33 @@
 */
 
 #include "utils/debug.hh"
-#include "external/lmgr.h"
+#include "modules/com_stack.hh"
+#include "modules/lmgr.hh"
+#include "modules/audi.hh"
 
 int main(int argc, char *argv[])
 {
+  ComStack comStack;
+  Lmgr lmgr(&comStack);
+  Audi audi(&comStack);
+
   int lmgrParam1[3] = {40, 16, 19};
   unsigned int lmgrParam2, lmgrParam3 = 0;
   int sid[3];
 
   // gf_dev_attach
   // gf_display_attach
-  comStackConnect();
-  lmgrCheckVersion();
-  lmgrRegisterDisplayable(lmgrParam1[0], lmgrParam2, lmgrParam3, 2);
-  lmgrGetVfb(lmgrParam1[0], sid);
+  comStack.connect();
+  lmgr.checkVersion();
+  lmgr.registerDisplayable(lmgrParam1[0], lmgrParam2, lmgrParam3, 2);
+  lmgr.getVfb(lmgrParam1[0], sid);
   // gf_context_create
   // gf_surface_attach_by_sid
   // OPENGL - DRAW
-  lmgrUpdateVfb(lmgrParam1[0]);
-  lmgrTalkToLayerManager(lmgrParam1, 3, 0);
-  comStackDisconnect();
+  lmgr.updateVfb(lmgrParam1[0]);
+  audi.talkToLayerManager(lmgrParam1, 3, 0);
+  audi.getKey();
+  comStack.disconnect();
 
   return 0;
 }

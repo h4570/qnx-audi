@@ -7,9 +7,10 @@ QCC_LIBS = -lc -lGLES_CM -lgf
 QCC_INCS = -I$(PROJECT_DIR)/include -I$(QNX632_DIR)/target/qnx6/usr/include
 QCC_CUSTOM_FLAGS = 
 QCC_OBJS =	main.o					\
-			external/com_stack.o	\
-			external/lmgr.o			\
 			models/texture.o		\
+			modules/audi.o			\
+			modules/com_stack.o		\
+			modules/lmgr.o			\
 			modules/screen.o		\
 			utils/debug.o
 
@@ -60,6 +61,8 @@ release-x86: $(QCC_OBJS:=.rls-x86)
 	cd $(BIN_X86_RELEASE)  \
 		&& $(QCC_COMPILER) $(QCC_LINK_FLAGS) $(QCC_X86_LINK_FLAGS) $(QCC_RELEASE_LINK_FLAGS) -o $(BIN_X86_RELEASE)/rls-x86.elf $(QCC_OBJS:=.rls-x86) $(QCC_x86_LIB_PATHS) $(QCC_LIBS) \
 		&& rm -f $(QCC_OBJS:=.rls-x86)
+
+# .cc
 
 %.o.dbg-shle: %.cc
 	$(QCC_COMPILER) $(QCC_INCS) $(QCC_BUILD_FLAGS) $(QCC_SHLE_BUILD_FLAGS) $(QCC_DEBUG_BUILD_FLAGS) $< -o $(BIN_SHLE_DEBUG)/$@
