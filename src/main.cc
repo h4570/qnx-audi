@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
   audi.unknown(40);
   audi.talkToLayerManager(lmgrParam1, 3, 0);
   ipcCh8.connect();
-  ipcCh8.getKey();
+  ipcCh8.waitForKey();
   screen.detachDevice();
   screen.detachDisplay();
   ipcCh8.disconnect();

@@ -7,6 +7,13 @@
 #ifndef _QNX_AUDI_IPC_CH8_
 #define _QNX_AUDI_IPC_CH8_
 
+enum KeyboardEvent
+{
+    Left,
+    Right,
+    Undefined
+};
+
 /** 
  * Class responsible for communication with Audi's keyboard.
  * Contains reversed functions from Audi's libraries.
@@ -32,11 +39,13 @@ public:
 
     void disconnect();
 
-    void getKey();
+    KeyboardEvent waitForKey();
 
 private:
     bool m_isConnected;
     int m_handle;
+    char *m_buffer;
+    const int m_bufferSize = 0x100;
 };
 
 #endif
