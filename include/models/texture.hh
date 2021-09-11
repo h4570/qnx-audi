@@ -8,7 +8,7 @@
 #define _QNX_AUDI_TEXTURE_
 
 #include <GLES/gl.h>
-#include <xstring>
+#include <string>
 
 enum TextureType
 {

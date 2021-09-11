@@ -3,28 +3,33 @@
         {
             "name": "QNX",
             "includePath": [
+                "${workspaceFolder}/intellisense-include/**",
                 "${workspaceFolder}/include/**",
-                "C:/QNX632/target/qnx6/usr/include/**"
+                "C:/QNX632/target/qnx6/usr/zepsute-include/**"
             ],
+            "forcedInclude": [
+                "${workspaceFolder}/.vscode/intellisense.h"
+            ],
+            // Edit1: zepsute-include ma pozamieniane #include_next na #include zeby intellisense dzialalo
+            // Edit2: Jednak przez to build nie dziala i tymczasowo dalem includy z 640, reinstall 6.3.2 zeby wrzucic naprawione /include
             "defines": [
                 "ARCH_X86",
-                "DUMB_INTELISENSE",
-                "__QNXNTO__",
+                "_HAS_C9X",
+                "__LITTLEENDIAN__",
+                "_CSTD=",
+                "__attribute__()=",
+                "__extension__=",
+                "STBI_NO_SIMD",
+                "_C_LIB_DECL=",
+                "_END_C_LIB_DECL=",
+                "_NTO_CPU_HDR_=sh",
+                "_NTO_HDR_=sh",
+                "_STD_BEGIN=",
+                "_STD_END=",
+                "_C_STD_BEGIN=",
+                "_C_STD_END=",
                 "__BEGIN_DECLS=",
-                // "__EXT_POSIX1_200112",// komentarze w time.h
-                "_FILE_OFFSET_BITS=64",
-                "_LARGEFILE64_SOURCE=1",
-                "__PID_T",
-                "pid_t=_Ssizet",
-                "close(fd) void close(int fd);",
-                "__EXT_UNIX_MISC",
-                "__EXT_POSIX1_198808",
-                "__EXT_QNX",
-                "__END_DECLS=",
-                "_uint32=unsigned int",
-                "_Uint64t=unsigned long",
-                "__X86__" // komentarze w gl.h
-                // komentarze w process.h
+                "__END_DECLS="
             ],
             "compilerPath": "C:/QNX632/host/win32/x86/usr/bin/qcc.exe",
             "cppStandard": "c++98",

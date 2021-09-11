@@ -1,0 +1,1 @@
+extern void __cpuid(int *info, int x)

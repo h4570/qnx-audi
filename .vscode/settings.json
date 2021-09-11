@@ -56,6 +56,17 @@
         "xfacet": "cpp",
         "xlocbuf": "cpp",
         "xtr1common": "cpp",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "stddef.h": "c",
+        "climits": "cpp",
+        "xcomplex": "cpp",
+        "platform.h": "c",
+        "cpuinline.h": "c",
+        "cinttypes": "cpp",
+        "functional": "cpp",
+        "cstdarg": "cpp",
+        "xmtx": "cpp",
+        "stl_algobase.h": "c",
+        "stl_pair.h": "c"
     }
 }
