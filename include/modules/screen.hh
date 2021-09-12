@@ -67,7 +67,6 @@ private:
     static const int lmgrParams0 = 40;
     Vfb vfb;
     gf_surface_t m_gfSurface;
-    gf_context_t m_gfContext;
 #endif
 
     EGLContext m_eglContext;

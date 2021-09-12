@@ -52,25 +52,10 @@ void Screen::init()
 #ifdef ARCH_SHLE
     m_lmgr.registerDisplayable(lmgrParams0, m_width, m_height, 2);
     m_lmgr.getVfb(lmgrParams0, &vfb);
-    int res = gf_context_create(&m_gfContext);
-    if (res == GF_ERR_OK)
-        logMessage("gf_context_create() success");
-    else
+    int res = gf_surface_attach_by_sid(&m_gfSurface, m_gfDevice, vfb.sid);
+    if (res != GF_ERR_OK)
     {
         switch (res)
-        {
-        case GF_ERR_MEM:
-            assert(false, "Failure to allocate memory for data structures");
-            break;
-        }
-    }
-
-    int res2 = gf_surface_attach_by_sid(&m_gfSurface, m_gfDevice, vfb.sid);
-    if (res2 == GF_ERR_OK)
-        logMessage("gf_surface_attach_by_sid() success");
-    else
-    {
-        switch (res2)
         {
         case GF_ERR_MEM:
             assert(false, "Failure to allocate memory for data structures");
@@ -83,26 +68,6 @@ void Screen::init()
             break;
         }
     }
-
-    int res3 = gf_context_set_surface(m_gfContext, m_gfSurface);
-    if (res3 == GF_ERR_OK)
-        logMessage("gf_context_set_surface() success");
-    else
-    {
-        switch (res3)
-        {
-        case GF_ERR_PARM:
-            assert(false, "The 2D engine can't render to the surface");
-            break;
-        case GF_ERR_MEM:
-            assert(false, "An error ocurred while allocating working memory");
-            break;
-        case GF_ERR_INUSE:
-            assert(false, "The context is rendering");
-            break;
-        }
-    }
-
 #endif
 
     setEGLDisplayConnection();
@@ -126,7 +91,6 @@ void Screen::uninit()
     detachLayer();
     uninitEGLDisplayConnection();
 #ifdef ARCH_SHLE
-    gf_context_free(m_gfContext);
     gf_surface_free(m_gfSurface);
 #endif
     detachDisplay();
