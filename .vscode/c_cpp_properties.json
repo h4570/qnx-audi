@@ -13,7 +13,8 @@
             // Edit1: zepsute-include ma pozamieniane #include_next na #include zeby intellisense dzialalo
             // Edit2: Jednak przez to build nie dziala i tymczasowo dalem includy z 640, reinstall 6.3.2 zeby wrzucic naprawione /include
             "defines": [
-                "ARCH_X86",
+                "ARCH_SHLE",
+                // "ARCH_X86",
                 "_HAS_C9X",
                 "__LITTLEENDIAN__",
                 "_CSTD=",

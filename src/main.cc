@@ -22,35 +22,43 @@
 #include "modules/screen.hh"
 #include "modules/audi.hh"
 
+#include "playground.cc" // TEMP!
+
 int main(int argc, char *argv[])
 {
-  Screen screen;
   ComStack comStack;
-  IpcCh8 ipcCh8;
-  Lmgr lmgr(&comStack);
+  Screen screen(&comStack);
   Audi audi(&comStack);
+  IpcCh8 ipcCh8;
 
-  int lmgrParam1[3] = {40, 16, 19};
-  int sid[3];
-
-  screen.attachDevice();
-  screen.attachDisplay();
+#ifdef ARCH_SHLE
+  const int lmgrParams0 = 40;
+  int lmgrParams[3] = {lmgrParams0, 16, 19};
   comStack.connect();
-  lmgr.checkVersion();
-  lmgr.registerDisplayable(lmgrParam1[0], screen.m_gfDisplayInfo.xres, screen.m_gfDisplayInfo.yres, 2);
-  lmgr.getVfb(lmgrParam1[0], sid);
-  // gf_context_create
-  // gf_surface_attach_by_sid
-  // OPENGL - DRAW
-  lmgr.updateVfb(lmgrParam1[0]);
+#endif
+  screen.init();
+
+  // draw(screen);
+
+#ifdef ARCH_SHLE
+  screen.updateVfb();
   audi.unknown(40);
-  audi.talkToLayerManager(lmgrParam1, 3, 0);
-  ipcCh8.connect();
-  ipcCh8.waitForKey();
-  screen.detachDevice();
-  screen.detachDisplay();
-  ipcCh8.disconnect();
+  audi.talkToLayerManager(lmgrParams, 3, 0);
+  // ipcCh8.connect();
+  // KeyboardEvent key = ipcCh8.waitForKey();
+  // if (key == Left)
+  //   logMessage("Left");
+  // else if (key == Right)
+  //   logMessage("Right");
+  // else if (key == Undefined)
+  //   logMessage("Undefined");
+  // ipcCh8.disconnect();
+#endif
+
+  screen.uninit();
+#ifdef ARCH_SHLE
   comStack.disconnect();
+#endif
 
   return 0;
 }

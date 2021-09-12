@@ -45,7 +45,7 @@ private:
     bool m_isConnected;
     int m_handle;
     char *m_buffer;
-    const int m_bufferSize = 0x100;
+    static const int m_bufferSize = 0x100;
 };
 
 #endif

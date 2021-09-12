@@ -15,7 +15,6 @@
 # Sandro Sobczyński <sandro.sobczynski@gmail.com>
 */
 
-
 #include "utils/debug.hh"
 #include "modules/screen.hh"
 #include "models/texture.hh"
@@ -46,28 +45,21 @@ const GLfloat texCoords[] = {
 //    0, 1};
 const GLubyte indices[] = {0, 1, 2, 0, 2, 3};
 
-void test()
+stbtt_fontinfo info;
+unsigned char *fontBuffer;
+char *fulltext = "Siema piter :D";
+int control = 0;
+
+void drawText()
 {
-  /* load font file */
-  long size;
-  unsigned char *fontBuffer;
-
-  FILE *fontFile = fopen("/proj/righteous.ttf", "rb");
-  fseek(fontFile, 0, SEEK_END);
-  size = ftell(fontFile);       /* how long is the file ? */
-  fseek(fontFile, 0, SEEK_SET); /* reset */
-
-  fontBuffer = (unsigned char *)malloc(size);
-
-  fread(fontBuffer, size, 1, fontFile);
-  fclose(fontFile);
-
-  /* prepare font */
-  stbtt_fontinfo info;
-  if (!stbtt_InitFont(&info, fontBuffer, 0))
-  {
-    printf("failed\n");
-  }
+  if (control++ == 0)
+    return;
+  char *word = new char[control + 1];
+  for (int i = 0; i < control; i++)
+    word[i] = fulltext[i];
+  word[control] = '\0';
+  if (control == strlen(fulltext) - 1)
+    control = 0;
 
   int b_w = 512; /* bitmap width */
   int b_h = 32;  /* bitmap height */
@@ -78,8 +70,6 @@ void test()
 
   /* calculate font scaling */
   float scale = stbtt_ScaleForPixelHeight(&info, l_h);
-
-  char *word = "Lorem ipsum dolor sit amet, consectetur";
 
   int x = 0;
 
@@ -116,8 +106,7 @@ void test()
     x += roundf(ax * scale);
 
     /* add kerning */
-    int kern;
-    kern = stbtt_GetCodepointKernAdvance(&info, word[i], word[i + 1]);
+    int kern = stbtt_GetCodepointKernAdvance(&info, word[i], word[i + 1]);
     x += roundf(kern * scale);
   }
 
@@ -148,19 +137,12 @@ void test()
 
   //
 
-  free(fontBuffer);
   free(bitmap);
 }
 
-void render()
+void render(const Texture &texture)
 {
-  Texture texture("/proj/car2.png", "car", TEX_TYPE_RGBA);
 
-  GL_CHECK(glMatrixMode(GL_PROJECTION));
-  GL_CHECK(glLoadIdentity());
-  GL_CHECK(glOrthof(0, 512, 512, 0, 0, 1));
-  GL_CHECK(glMatrixMode(GL_MODELVIEW));
-  GL_CHECK(glClearColor(.7F, .7F, .7F, 1.0F));
   GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
   // GLuint textureIds[1];
@@ -186,51 +168,104 @@ void render()
   // GL_CHECK(glVertexPointer(2, GL_FLOAT, 0, vertices));
   // GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices));
 
-  test();
+  drawText();
 };
 
 #include <termios.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+void draw(const Screen &screen)
 {
-  Screen screen;
-  screen.init();
 
   GL_CHECK(glDisable(GL_DEPTH_TEST));
+#ifdef ARCH_SHLE
+  Texture texture("/mnt/sdcard10t12/assets/car2.png", "car", TEX_TYPE_RGBA);
+#else
+  Texture texture("/proj/car2.png", "car", TEX_TYPE_RGBA);
+#endif
+  GL_CHECK(glMatrixMode(GL_PROJECTION));
+  GL_CHECK(glLoadIdentity());
+  GL_CHECK(glOrthof(0, 512, 512, 0, 0, 1));
+  GL_CHECK(glMatrixMode(GL_MODELVIEW));
+  GL_CHECK(glClearColor(.7F, .7F, .7F, 1.0F));
 
-  // int bytes_to_read;
-  // char buf[1000];
-  // struct termios termios_p;
-  // // Set raw mode:
-  // if (tcgetattr(1, &termios_p) == -1)
-  //   assert(false, "tcgetattr");
-  // if (cfmakeraw(&termios_p) == -1)
-  //   assert(false, "cfmakeraw");
-  // if (tcsetattr(1, TCSADRAIN, &termios_p) == -1)
-  //   assert(false, "tcsetattr");
+  /* load font file */
+  long size;
+// TODO uzywac configa
+#ifdef ARCH_SHLE
+  FILE *fontFile = fopen("/mnt/sdcard10t12/assets/righteous.ttf", "rb");
+#else
+  FILE *fontFile = fopen("/proj/righteous.ttf", "rb");
+#endif
+  fseek(fontFile, 0, SEEK_END);
+  size = ftell(fontFile);       /* how long is the file ? */
+  fseek(fontFile, 0, SEEK_SET); /* reset */
 
-  for (int xd = 0; xd < 50; xd++)
+  fontBuffer = (unsigned char *)malloc(size);
+
+  fread(fontBuffer, size, 1, fontFile);
+  fclose(fontFile);
+
+  /* prepare font */
+
+  if (!stbtt_InitFont(&info, fontBuffer, 0))
+  {
+    printf("failed\n");
+  }
+
+  for (int xd = 0; xd < 100; xd++)
   {
     if (xd % 20 == 0)
       logMessage("Im here!");
 
-    // bytes_to_read = tcischars(1); // kbhit
-    // if (bytes_to_read == -1)
-    //   assert(false, "tcischars");
-
-    // if (bytes_to_read > 0)
-    // {
-    //   fprintf(stdout, "kbhit %d", bytes_to_read);
-    //   read(1, buf, bytes_to_read); // getch()
-    // }
-
-    render();
+    render(texture);
     GL_CHECK(glFinish());
     eglWaitGL();
     eglSwapBuffers(screen.Display, screen.Surface);
   }
 
-  screen.uninit();
-  return EXIT_SUCCESS;
+  free(fontBuffer);
 }
+
+// int main(int argc, char *argv[])
+// {
+//   Screen screen;
+//   screen.init();
+
+//   GL_CHECK(glDisable(GL_DEPTH_TEST));
+
+//   // int bytes_to_read;
+//   // char buf[1000];
+//   // struct termios termios_p;
+//   // // Set raw mode:
+//   // if (tcgetattr(1, &termios_p) == -1)
+//   //   assert(false, "tcgetattr");
+//   // if (cfmakeraw(&termios_p) == -1)
+//   //   assert(false, "cfmakeraw");
+//   // if (tcsetattr(1, TCSADRAIN, &termios_p) == -1)
+//   //   assert(false, "tcsetattr");
+
+//   for (int xd = 0; xd < 50; xd++)
+//   {
+//     if (xd % 20 == 0)
+//       logMessage("Im here!");
+
+//     // bytes_to_read = tcischars(1); // kbhit
+//     // if (bytes_to_read == -1)
+//     //   assert(false, "tcischars");
+
+//     // if (bytes_to_read > 0)
+//     // {
+//     //   fprintf(stdout, "kbhit %d", bytes_to_read);
+//     //   read(1, buf, bytes_to_read); // getch()
+//     // }
+
+//     render();
+//     GL_CHECK(glFinish());
+//     eglWaitGL();
+//     eglSwapBuffers(screen.Display, screen.Surface);
+//   }
+
+//   screen.uninit();
+//   return EXIT_SUCCESS;
+// }

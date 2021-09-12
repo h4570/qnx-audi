@@ -8,6 +8,14 @@
 #define _QNX_AUDI_LMGR_
 
 #include "modules/com_stack.hh"
+#include <gf/gf.h>
+
+struct Vfb
+{
+    gf_sid_t sid;
+    int val2;
+    int val3;
+};
 
 /** 
  * Class responsible for "lmgr" communication with Audi.
@@ -28,7 +36,7 @@ public:
 
     void registerDisplayable(const int param1, const int param2, const int param3, const int param4);
 
-    void getVfb(const int param, int *sid);
+    void getVfb(const int param, Vfb *vfb);
 
     void updateVfb(const int param);
 

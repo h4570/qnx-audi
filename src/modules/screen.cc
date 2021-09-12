@@ -11,7 +11,7 @@
 // Constructors/Destructors
 // ----
 
-Screen::Screen()
+Screen::Screen(ComStack *comStack) : m_lmgr(comStack)
 {
     m_layerIndex = 0;
     m_width = 0;
@@ -48,27 +48,106 @@ void Screen::init()
 {
     attachDevice();
     attachDisplay();
-    setEGLDisplayConnection();
-    attachLayer();
-    initEGLDisplayConnection();
-    searchForLayerAndEGLConfig();
-    create3DTarget();
-    enableLayer();
-    createEGLContext();
-    createEGLSurface();
-    connectEGLContextWithSurface();
+
+#ifdef ARCH_SHLE
+    m_lmgr.registerDisplayable(lmgrParams0, m_width, m_height, 2);
+    m_lmgr.getVfb(lmgrParams0, &vfb);
+    int res = gf_context_create(&m_gfContext);
+    if (res == GF_ERR_OK)
+        logMessage("gf_context_create() success");
+    else
+    {
+        switch (res)
+        {
+        case GF_ERR_MEM:
+            assert(false, "Failure to allocate memory for data structures");
+            break;
+        }
+    }
+
+    int res2 = gf_surface_attach_by_sid(&m_gfSurface, m_gfDevice, vfb.sid);
+    if (res2 == GF_ERR_OK)
+        logMessage("gf_surface_attach_by_sid() success");
+    else
+    {
+        switch (res2)
+        {
+        case GF_ERR_MEM:
+            assert(false, "Failure to allocate memory for data structures");
+            break;
+        case GF_ERR_IODISPLAY:
+            assert(false, "Error communicating with io-display. Check to ensure io-display is still running");
+            break;
+        case GF_ERR_PARM:
+            assert(false, "Invalid surface ID");
+            break;
+        }
+    }
+
+    int res3 = gf_context_set_surface(m_gfContext, m_gfSurface);
+    if (res3 == GF_ERR_OK)
+        logMessage("gf_context_set_surface() success");
+    else
+    {
+        switch (res3)
+        {
+        case GF_ERR_PARM:
+            assert(false, "The 2D engine can't render to the surface");
+            break;
+        case GF_ERR_MEM:
+            assert(false, "An error ocurred while allocating working memory");
+            break;
+        case GF_ERR_INUSE:
+            assert(false, "The context is rendering");
+            break;
+        }
+    }
+
+#endif
+    // ARGB
+    gf_color_t color = (uint8_t(255) << 24) | (uint8_t(128) << 16) | (uint8_t(64) << 8) | uint8_t(100);
+    for (int xd = 0; xd < 100; xd++)
+    {
+        if (xd % 20 == 0)
+            logMessage("Im herex!");
+
+        if (gf_draw_begin(m_gfContext) != GF_ERR_OK)
+            logMessage("gf_draw_begin() failed");
+        gf_context_set_fgcolor(m_gfContext, color);
+        if (gf_draw_rect(m_gfContext, 0, 0, m_width - 1, m_height - 1) != GF_ERR_OK)
+            logMessage("gf_draw_rect() failed");
+        if (gf_draw_finish(m_gfContext) != GF_ERR_OK)
+            logMessage("gf_draw_finish() failed");
+
+        gf_draw_end(m_gfContext);
+    }
+
+    // setEGLDisplayConnection();
+    // attachLayer();
+    // initEGLDisplayConnection();
+    // searchForLayerAndEGLConfig();
+    // create3DTarget();
+    // enableLayer();
+    // createEGLContext();
+    // createEGLSurface();
+    // connectEGLContextWithSurface();
     m_isInitialized = true;
 }
 
 void Screen::uninit()
 {
     assert(m_isInitialized, "Screen is not initialized");
-    destroyEGLSurface();
-    destroyEGLContext();
-    free3DTarget();
-    detachLayer();
+    // destroyEGLSurface();
+    // destroyEGLContext();
+    // free3DTarget();
+    // detachLayer();
+    // uninitEGLDisplayConnection();
     detachDisplay();
     detachDevice();
+#ifdef ARCH_SHLE
+    gf_context_free(m_gfContext);
+    gf_surface_free(m_gfSurface);
+#endif
     m_isInitialized = false;
 }
 
@@ -164,7 +243,8 @@ void Screen::setEGLDisplayConnection()
 
 void Screen::attachLayer()
 {
-    int res = gf_layer_attach(&m_gfLayer, m_gfDisplay, m_layerIndex, GF_LAYER_ATTACH_PASSIVE);
+    // UWAGA - tu bylo GF_LAYER_ATTACH_PASSIVE
+    int res = gf_layer_attach(&m_gfLayer, m_gfDisplay, m_layerIndex, GF_LAYER_ATTACH_NODEFAULTS);
     if (res == GF_ERR_OK)
     {
         logMessage("Layer attached");
@@ -208,6 +288,16 @@ void Screen::initEGLDisplayConnection()
     logMessage("EGL display connection initialized");
 }
 
+void Screen::uninitEGLDisplayConnection()
+{
+    EGLBoolean res = eglTerminate(Display);
+    if (res != EGL_TRUE)
+    {
+        assert(false, "EGL display connection terminate failed");
+        return;
+    }
+    logMessage("EGL display connection terminated");
+}
 void Screen::searchForLayerAndEGLConfig()
 {
     for (GLuint i = 0; i < 100; i++) // TODO
@@ -253,7 +343,7 @@ bool Screen::__searchForLayer(const int &t_formatIndex)
 
 bool Screen::__searchForEGLConfig()
 {
-    int res = eglChooseConfig(Display, m_attributes, &m_eglConfig, 1, &m_eglConfigNumber) == EGL_TRUE;
+    EGLBoolean res = eglChooseConfig(Display, m_attributes, &m_eglConfig, 1, &m_eglConfigNumber);
     if (res == EGL_TRUE)
     {
         if (m_eglConfigNumber > 0)
@@ -269,7 +359,11 @@ bool Screen::__searchForEGLConfig()
 
 void Screen::create3DTarget()
 {
+#ifdef ARCH_SHLE
+    int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, &m_gfSurface, 1, m_width, m_height, m_gfLayerInfo.format);
+#else
     int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, NULL, 0, m_width, m_height, m_gfLayerInfo.format);
+#endif
     if (res == GF_ERR_OK)
     {
         logMessage("3D target created");

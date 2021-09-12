@@ -26,7 +26,10 @@ Texture::Texture(const char *t_fullPath, const char *t_name, const TextureType t
     assert(m_data != NULL, "Failed to load texture");
 }
 
-Texture::~Texture() {}
+Texture::~Texture()
+{
+    delete[] m_data;
+}
 
 const int Texture::getStbiType() const
 {

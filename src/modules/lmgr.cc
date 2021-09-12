@@ -42,17 +42,17 @@ void Lmgr::registerDisplayable(const int param1, const int param2, const int par
     logMessage("[Audi] - lmgrRegisterDisplayable: Success!");
 }
 
-void Lmgr::getVfb(const int param, int *sid)
+void Lmgr::getVfb(const int param, Vfb *vfb)
 {
-    assert(sid != NULL, "lmgrGetVfb failed: Wrong input parameter!");
+    assert(vfb != NULL, "lmgrGetVfb failed: Wrong input parameter!");
     const int command = -0x3feffafd;
     const int dwords = 4;
     int data[dwords] = {param, -1, -1, -1};
 
     m_comStack->send(command, data, dwords * 4);
-    sid[0] = data[1];
-    sid[1] = data[2];
-    sid[2] = data[3];
+    vfb->sid = data[1];
+    vfb->val2 = data[2];
+    vfb->val3 = data[3];
     logMessage("[Audi] - lmgrGetVfb: Success!");
 }
 

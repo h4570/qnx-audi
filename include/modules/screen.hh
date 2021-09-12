@@ -10,13 +10,14 @@
 #include <gf/gf.h>
 #include <gf/gf3d.h>
 #include <GLES/egl.h>
+#include "modules/lmgr.hh"
 
 /** QNX screen */
 class Screen
 {
 
 public:
-    Screen();
+    Screen(ComStack *comStack);
     ~Screen();
 
     EGLDisplay Display;
@@ -44,21 +45,30 @@ public:
     /** Unitialize QNX rendering stuff */
     void uninit();
 
-    // TEMP!!!
-    void attachDevice();
-    void attachDisplay();
-    gf_display_info_t m_gfDisplayInfo;
-    void detachDevice();
-    void detachDisplay();
-    //
+#ifdef ARCH_SHLE
+    inline void updateVfb()
+    {
+        m_lmgr.updateVfb(lmgrParams0);
+    }
+#endif
 
 private:
+    Lmgr m_lmgr;
+
     gf_dev_t m_gfDevice;
     gf_dev_info_t m_gfDeviceInfo;
     gf_display_t m_gfDisplay;
+    gf_display_info_t m_gfDisplayInfo;
     gf_layer_t m_gfLayer;
     gf_layer_info_t m_gfLayerInfo;
     gf_3d_target_t m_gf3DTarget;
+
+#ifdef ARCH_SHLE
+    static const int lmgrParams0 = 40;
+    Vfb vfb;
+    gf_surface_t m_gfSurface;
+    gf_context_t m_gfContext;
+#endif
 
     EGLContext m_eglContext;
     EGLConfig m_eglConfig;
@@ -69,6 +79,8 @@ private:
     EGLint m_eglConfigNumber;
     EGLint *m_attributes;
 
+    void attachDevice();
+    void attachDisplay();
     void setEGLDisplayConnection();
     void attachLayer();
     void initEGLDisplayConnection();
@@ -79,7 +91,10 @@ private:
     void createEGLSurface();
     void connectEGLContextWithSurface();
 
+    void detachDevice();
+    void detachDisplay();
     void detachLayer();
+    void uninitEGLDisplayConnection();
     void free3DTarget();
     void destroyEGLContext();
     void destroyEGLSurface();
