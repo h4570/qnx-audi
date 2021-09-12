@@ -17,7 +17,8 @@
 
 #include "utils/debug.hh"
 #include "modules/com_stack.hh"
-#include "modules/ipc_ch8.hh"
+#include "modules/keyboard/ipc_ch8.hh"
+#include "modules/keyboard/ps2.hh"
 #include "modules/lmgr.hh"
 #include "modules/screen.hh"
 #include "modules/audi.hh"
@@ -29,7 +30,12 @@ int main(int argc, char *argv[])
   ComStack comStack;
   Screen screen(&comStack);
   Audi audi(&comStack);
-  IpcCh8 ipcCh8;
+#ifdef ARCH_SHLE
+  IpcCh8 keyboard;
+#else
+  Ps2 keyboard;
+#endif
+  keyboard.init();
 
 #ifdef ARCH_SHLE
   const int lmgrParams0 = 40;
@@ -38,24 +44,26 @@ int main(int argc, char *argv[])
 #endif
   screen.init();
 
-  draw(screen);
+  prepare();
+  for (int xd = 0; xd < 100; xd++)
+  {
+    if (keyboard.isExitPressed())
+      break;
+    if (xd % 20 == 0)
+      logMessage("Im here!");
+    draw(screen);
+  }
+  dispose();
 
 #ifdef ARCH_SHLE
   screen.updateVfb();
   audi.unknown(40);
   audi.talkToLayerManager(lmgrParams, 3, 0);
-  // ipcCh8.connect();
-  // KeyboardEvent key = ipcCh8.waitForKey();
-  // if (key == Left)
-  //   logMessage("Left");
-  // else if (key == Right)
-  //   logMessage("Right");
-  // else if (key == Undefined)
-  //   logMessage("Undefined");
-  // ipcCh8.disconnect();
 #endif
 
+  keyboard.dispose();
   screen.uninit();
+
 #ifdef ARCH_SHLE
   comStack.disconnect();
 #endif

@@ -20,6 +20,8 @@
 #define __PTHREAD_COND_T int
 #define __PTHREAD_ONCE_T int
 #define __PTHREAD_ATTR_T int
+#define __SUSECONDS_T int
+#define __TIME_T int
 
 // typedef char _int8;
 typedef unsigned char _uint8;
@@ -57,6 +59,32 @@ typedef unsigned int *_Uintptrt;
 typedef unsigned long long _ULonglong;
 typedef long long _Longlong;
 
+enum
+{
+    SIGEV_NONE,          /* notify */
+    SIGEV_SIGNAL,        /* notify, signo, value */
+    SIGEV_SIGNAL_CODE,   /* notify, signo, value, code */
+    SIGEV_SIGNAL_THREAD, /* notify, signo, value, code */
+    SIGEV_PULSE,         /* notify, coid, priority, code, value */
+    SIGEV_UNBLOCK,       /* notify */
+    SIGEV_INTR,          /* notify */
+    SIGEV_THREAD         /* notify, notify_function, notify_attributes */
+};
+
+struct sigevent
+{
+    int sigev_notify;
+    union
+    {
+        int __sigev_signo;
+        int __sigev_coid;
+        int __sigev_id;
+        void (*__sigev_notify_function)(union sigval);
+    }
+};
+
+extern void srand(unsigned int __seed);
+extern void SIGEV_INTR_INIT(void *a);
 extern void exit(int __status);
 extern long int strtol(const char *__nptr, char **__endptr, int __base);
 extern int rand(void);
@@ -65,6 +93,10 @@ extern int open(const char *a, int b);
 extern int close(int a);
 extern int getpid();
 extern int read(int fd, void *buf, size_t count);
+extern unsigned delay(unsigned int __milliseconds);
+
+extern _Uint8t in8(int port);
+extern void out8(int port, _Uint8t val);
 
 #define RAND_MAX 32767u
 #define EXIT_SUCCESS 0
@@ -75,3 +107,4 @@ extern int read(int fd, void *buf, size_t count);
 #undef _STDDEF_H_INCLUDED
 #undef _LIMITS_H_INCLUDED
 #undef _MSC_VER
+#undef __QNXNTO__

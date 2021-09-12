@@ -47,7 +47,7 @@ const GLubyte indices[] = {0, 1, 2, 0, 2, 3};
 
 stbtt_fontinfo info;
 unsigned char *fontBuffer;
-char *fulltext = "hej kochanie co tam?   ";
+char *fulltext = "co jest 123  ";
 int delay__ = 0;
 int control = 0;
 
@@ -180,14 +180,15 @@ void render(const Texture &texture)
 #include <termios.h>
 #include <unistd.h>
 
-void draw(const Screen &screen)
-{
+Texture *tex;
 
+void prepare()
+{
   GL_CHECK(glDisable(GL_DEPTH_TEST));
 #ifdef ARCH_SHLE
-  Texture texture("/mnt/sdcard10t12/assets/car2.png", "car", TEX_TYPE_RGBA);
+  tex = new Texture("/mnt/sdcard10t12/assets/car2.png", "car", TEX_TYPE_RGBA);
 #else
-  Texture texture("/proj/car2.png", "car", TEX_TYPE_RGBA);
+  tex = new Texture("/proj/car2.png", "car", TEX_TYPE_RGBA);
 #endif
   GL_CHECK(glMatrixMode(GL_PROJECTION));
   GL_CHECK(glLoadIdentity());
@@ -218,60 +219,18 @@ void draw(const Screen &screen)
   {
     printf("failed\n");
   }
+}
 
-  for (int xd = 0; xd < 100; xd++)
-  {
-    if (xd % 20 == 0)
-      logMessage("Im here!");
-
-    render(texture);
-    GL_CHECK(glFinish());
-    eglWaitGL();
-    eglSwapBuffers(screen.Display, screen.Surface);
-  }
-
+void dispose()
+{
+  delete tex;
   free(fontBuffer);
 }
 
-// int main(int argc, char *argv[])
-// {
-//   Screen screen;
-//   screen.init();
-
-//   GL_CHECK(glDisable(GL_DEPTH_TEST));
-
-//   // int bytes_to_read;
-//   // char buf[1000];
-//   // struct termios termios_p;
-//   // // Set raw mode:
-//   // if (tcgetattr(1, &termios_p) == -1)
-//   //   assert(false, "tcgetattr");
-//   // if (cfmakeraw(&termios_p) == -1)
-//   //   assert(false, "cfmakeraw");
-//   // if (tcsetattr(1, TCSADRAIN, &termios_p) == -1)
-//   //   assert(false, "tcsetattr");
-
-//   for (int xd = 0; xd < 50; xd++)
-//   {
-//     if (xd % 20 == 0)
-//       logMessage("Im here!");
-
-//     // bytes_to_read = tcischars(1); // kbhit
-//     // if (bytes_to_read == -1)
-//     //   assert(false, "tcischars");
-
-//     // if (bytes_to_read > 0)
-//     // {
-//     //   fprintf(stdout, "kbhit %d", bytes_to_read);
-//     //   read(1, buf, bytes_to_read); // getch()
-//     // }
-
-//     render();
-//     GL_CHECK(glFinish());
-//     eglWaitGL();
-//     eglSwapBuffers(screen.Display, screen.Surface);
-//   }
-
-//   screen.uninit();
-//   return EXIT_SUCCESS;
-// }
+void draw(const Screen &screen)
+{
+  render(*tex);
+  GL_CHECK(glFinish());
+  eglWaitGL();
+  eglSwapBuffers(screen.Display, screen.Surface);
+}
