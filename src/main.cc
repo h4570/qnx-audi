@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 #endif
   screen.init();
 
-  // draw(screen);
+  draw(screen);
 
 #ifdef ARCH_SHLE
   screen.updateVfb();

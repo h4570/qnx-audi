@@ -104,50 +104,33 @@ void Screen::init()
     }
 
 #endif
-    // ARGB
-    gf_color_t color = (uint8_t(255) << 24) | (uint8_t(128) << 16) | (uint8_t(64) << 8) | uint8_t(100);
-    for (int xd = 0; xd < 100; xd++)
-    {
-        if (xd % 20 == 0)
-            logMessage("Im herex!");
 
-        if (gf_draw_begin(m_gfContext) != GF_ERR_OK)
-            logMessage("gf_draw_begin() failed");
-        gf_context_set_fgcolor(m_gfContext, color);
-        if (gf_draw_rect(m_gfContext, 0, 0, m_width - 1, m_height - 1) != GF_ERR_OK)
-            logMessage("gf_draw_rect() failed");
-        if (gf_draw_finish(m_gfContext) != GF_ERR_OK)
-            logMessage("gf_draw_finish() failed");
-
-        gf_draw_end(m_gfContext);
-    }
-
-    // setEGLDisplayConnection();
-    // attachLayer();
-    // initEGLDisplayConnection();
-    // searchForLayerAndEGLConfig();
-    // create3DTarget();
-    // enableLayer();
-    // createEGLContext();
-    // createEGLSurface();
-    // connectEGLContextWithSurface();
+    setEGLDisplayConnection();
+    attachLayer();
+    initEGLDisplayConnection();
+    searchForLayerAndEGLConfig();
+    create3DTarget();
+    enableLayer();
+    createEGLContext();
+    createEGLSurface();
+    connectEGLContextWithSurface();
     m_isInitialized = true;
 }
 
 void Screen::uninit()
 {
     assert(m_isInitialized, "Screen is not initialized");
-    // destroyEGLSurface();
-    // destroyEGLContext();
-    // free3DTarget();
-    // detachLayer();
-    // uninitEGLDisplayConnection();
-    detachDisplay();
-    detachDevice();
+    destroyEGLSurface();
+    destroyEGLContext();
+    free3DTarget();
+    detachLayer();
+    uninitEGLDisplayConnection();
 #ifdef ARCH_SHLE
     gf_context_free(m_gfContext);
     gf_surface_free(m_gfSurface);
 #endif
+    detachDisplay();
+    detachDevice();
     m_isInitialized = false;
 }
 
@@ -197,7 +180,11 @@ void Screen::attachDisplay()
     int res = gf_display_attach(&m_gfDisplay, m_gfDevice, 0, &m_gfDisplayInfo);
     if (res == GF_ERR_OK)
     {
+#ifdef ARCH_SHLE
+        m_layerIndex = m_gfDisplayInfo.nlayers - 1;
+#else
         m_layerIndex = m_gfDisplayInfo.main_layer_index;
+#endif
         m_width = m_gfDisplayInfo.xres;
         m_height = m_gfDisplayInfo.yres;
         logMessage("Display attached");
@@ -243,8 +230,7 @@ void Screen::setEGLDisplayConnection()
 
 void Screen::attachLayer()
 {
-    // UWAGA - tu bylo GF_LAYER_ATTACH_PASSIVE
-    int res = gf_layer_attach(&m_gfLayer, m_gfDisplay, m_layerIndex, GF_LAYER_ATTACH_NODEFAULTS);
+    int res = gf_layer_attach(&m_gfLayer, m_gfDisplay, m_layerIndex, GF_LAYER_ATTACH_PASSIVE);
     if (res == GF_ERR_OK)
     {
         logMessage("Layer attached");
@@ -360,7 +346,9 @@ bool Screen::__searchForEGLConfig()
 void Screen::create3DTarget()
 {
 #ifdef ARCH_SHLE
-    int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, &m_gfSurface, 1, m_width, m_height, m_gfLayerInfo.format);
+    gf_surface_info_t surfaceInfo;
+    gf_surface_get_info(m_gfSurface, &surfaceInfo);
+    int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, &m_gfSurface, 1, m_width, m_height, surfaceInfo.format);
 #else
     int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, NULL, 0, m_width, m_height, m_gfLayerInfo.format);
 #endif

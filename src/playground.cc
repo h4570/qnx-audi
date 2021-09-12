@@ -47,12 +47,18 @@ const GLubyte indices[] = {0, 1, 2, 0, 2, 3};
 
 stbtt_fontinfo info;
 unsigned char *fontBuffer;
-char *fulltext = "Siema piter :D";
+char *fulltext = "hej kochanie co tam?   ";
+int delay__ = 0;
 int control = 0;
 
 void drawText()
 {
-  if (control++ == 0)
+  if (delay__++ == 0)
+  {
+    delay__ = 0;
+    control++;
+  }
+  if (control == 0)
     return;
   char *word = new char[control + 1];
   for (int i = 0; i < control; i++)
