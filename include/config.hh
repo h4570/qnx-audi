@@ -10,4 +10,13 @@
 #define AUDI_SD_PATH "/mnt/sdcard10t12"
 #define AUDI_LOGS_FILE AUDI_SD_PATH "/logs/log.txt"
 
+#define PC_ASSETS_PATH "/proj"
+#define AUDI_ASSETS_PATH "/mnt/sdcard10t12/assets"
+
+#ifdef ARCH_SHLE
+#define ASSETS_PATH AUDI_ASSETS_PATH;
+#else
+#define ASSETS_PATH PC_ASSETS_PATH;
+#endif
+
 #endif

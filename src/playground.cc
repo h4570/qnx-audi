@@ -28,8 +28,10 @@
 
 #include <stdio.h> // file
 
+// const float maxX = 512.0F;
+// const float maxY = 32.0F;
 const float maxX = 512.0F;
-const float maxY = 32.0F;
+const float maxY = 512.0F;
 
 const GLfloat vertices[] = {0, maxY, 0, 0, maxX, 0, maxX, maxY};
 const GLfloat texCoords[] = {
@@ -149,32 +151,30 @@ void drawText()
 void render(const Texture &texture)
 {
 
-  GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+  GLuint textureIds[1];
+  GL_CHECK(glGenTextures(1, textureIds));
+  int textureId = textureIds[0];
+  GL_CHECK(glEnable(GL_TEXTURE_2D));
+  GL_CHECK(glEnable(GL_BLEND));
+  GL_CHECK(glActiveTexture(GL_TEXTURE0));
+  GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+  GL_CHECK(glBindTexture(GL_TEXTURE_2D, textureId));
+  GL_CHECK(glColor4f(1.0f, 1.0f, 1.0f, 1.0f));
+  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+  GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
-  // GLuint textureIds[1];
-  // GL_CHECK(glGenTextures(1, textureIds));
-  // int textureId = textureIds[0];
-  // GL_CHECK(glEnable(GL_TEXTURE_2D));
-  // GL_CHECK(glEnable(GL_BLEND));
-  // GL_CHECK(glActiveTexture(GL_TEXTURE0));
-  // GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-  // GL_CHECK(glBindTexture(GL_TEXTURE_2D, textureId));
-  // GL_CHECK(glColor4f(1.0f, 1.0f, 1.0f, 1.0f));
-  // GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-  // GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-  // GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-  // GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-  // GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+  GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, texture.getGlType(), texture.getWidth(), texture.getHeight(), 0, texture.getGlType(), GL_UNSIGNED_BYTE, texture.getData()));
 
-  // GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, texture.getGlType(), texture.getWidth(), texture.getHeight(), 0, texture.getGlType(), GL_UNSIGNED_BYTE, texture.getData()));
+  GL_CHECK(glEnableClientState(GL_VERTEX_ARRAY));
+  GL_CHECK(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
+  GL_CHECK(glTexCoordPointer(2, GL_FLOAT, 0, texCoords));
+  GL_CHECK(glVertexPointer(2, GL_FLOAT, 0, vertices));
+  GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices));
 
-  // GL_CHECK(glEnableClientState(GL_VERTEX_ARRAY));
-  // GL_CHECK(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
-  // GL_CHECK(glTexCoordPointer(2, GL_FLOAT, 0, texCoords));
-  // GL_CHECK(glVertexPointer(2, GL_FLOAT, 0, vertices));
-  // GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices));
-
-  drawText();
+  // drawText();
 };
 
 #include <termios.h>

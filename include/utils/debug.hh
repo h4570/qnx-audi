@@ -20,6 +20,7 @@ public:
     static void _log(const char *t_key, const int value, const char *t_file, const int &t_line);
     static void _log(const char *t_key, const unsigned int value, const char *t_file, const int &t_line);
     static void _log(const char *t_key, const bool value, const char *t_file, const int &t_line);
+    static void _log(const char *t_key, const char *value, const char *t_file, const int &t_line);
 
     static void _checkOpenGLError(const char *t_statement, const char *t_name, const int &t_line);
 };

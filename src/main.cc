@@ -22,8 +22,7 @@
 #include "modules/lmgr.hh"
 #include "modules/screen.hh"
 #include "modules/audi.hh"
-
-#include "playground.cc" // TEMP!
+#include "game/game.hh"
 
 int main(int argc, char *argv[])
 {
@@ -44,16 +43,19 @@ int main(int argc, char *argv[])
 #endif
   screen.init();
 
-  prepare();
-  for (int xd = 0; xd < 100; xd++)
+  Game game(screen, &keyboard);
+
+  game.init();
+  while (true)
   {
     if (keyboard.isExitPressed())
       break;
-    if (xd % 20 == 0)
-      logMessage("Im here!");
-    draw(screen);
+    game.render();
+    GL_CHECK(glFinish());
+    eglWaitGL();
+    eglSwapBuffers(screen.Display, screen.Surface);
   }
-  dispose();
+  game.uninit();
 
 #ifdef ARCH_SHLE
   screen.updateVfb();

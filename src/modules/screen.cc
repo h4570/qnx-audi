@@ -151,6 +151,8 @@ void Screen::attachDisplay()
 #endif
         m_width = m_gfDisplayInfo.xres;
         m_height = m_gfDisplayInfo.yres;
+        logKeyValue("Display width", m_width);
+        logKeyValue("Display height", m_height);
         logMessage("Display attached");
         return;
     }
@@ -250,7 +252,7 @@ void Screen::uninitEGLDisplayConnection()
 }
 void Screen::searchForLayerAndEGLConfig()
 {
-    for (GLuint i = 0; i < 100; i++) // TODO
+    for (GLuint i = 0; i < 100; i++)
     {
         // Walk through all possible pixel formats for this layer
         bool layerFound = __searchForLayer(i);
