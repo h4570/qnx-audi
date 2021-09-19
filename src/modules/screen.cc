@@ -49,7 +49,7 @@ void Screen::init()
     attachDevice();
     attachDisplay();
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
     m_lmgr.registerDisplayable(lmgrParams0, m_width, m_height, 2);
     m_lmgr.getVfb(lmgrParams0, &vfb);
     int res = gf_surface_attach_by_sid(&m_gfSurface, m_gfDevice, vfb.sid);
@@ -90,7 +90,7 @@ void Screen::uninit()
     free3DTarget();
     detachLayer();
     uninitEGLDisplayConnection();
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
     gf_surface_free(m_gfSurface);
 #endif
     detachDisplay();
@@ -144,7 +144,7 @@ void Screen::attachDisplay()
     int res = gf_display_attach(&m_gfDisplay, m_gfDevice, 0, &m_gfDisplayInfo);
     if (res == GF_ERR_OK)
     {
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
         m_layerIndex = m_gfDisplayInfo.nlayers - 1;
 #else
         m_layerIndex = m_gfDisplayInfo.main_layer_index;
@@ -311,7 +311,7 @@ bool Screen::__searchForEGLConfig()
 
 void Screen::create3DTarget()
 {
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
     gf_surface_info_t surfaceInfo;
     gf_surface_get_info(m_gfSurface, &surfaceInfo);
     int res = gf_3d_target_create(&m_gf3DTarget, m_gfLayer, &m_gfSurface, 1, m_width, m_height, surfaceInfo.format);

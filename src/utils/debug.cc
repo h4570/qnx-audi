@@ -12,7 +12,7 @@
 // Release mode, all
 // ----
 
-#ifdef ARCH_X86
+#ifdef TARGET_PC
 
 // ----
 // Release mode, x86
@@ -25,7 +25,7 @@ void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_fi
 void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)((void)0);
 void Debug::_log(const char *t_key, const char *t_value, const char *t_file, const int &t_line)((void)0);
 
-#else // ARCH_X86
+#else // TARGET_PC
 
 // ----
 // Release mode, SHLE
@@ -38,7 +38,7 @@ void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_fi
 void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)((void)0);
 void Debug::_log(const char *t_key, const char *t_value, const char *t_file, const int &t_line)((void)0);
 
-#endif // ARCH_X86
+#endif // TARGET_PC
 #else  // NDEBUG
 
 // ----
@@ -59,7 +59,7 @@ void Debug::_checkOpenGLError(const char *t_statement, const char *t_name, const
     }
 }
 
-#ifdef ARCH_X86
+#ifdef TARGET_PC
 
 // ----
 // Debug mode, x86
@@ -100,7 +100,7 @@ void Debug::_log(const char *t_key, const char *t_value, const char *t_file, con
     fprintf(stdout, "Log: %s = %s | %s:%d\n", t_key, t_value, t_file, t_line);
 }
 
-#else // ARCH_X86
+#else // TARGET_PC
 
 // ----
 // Debug mode, SHLE
@@ -161,5 +161,5 @@ void Debug::_log(const char *t_key, const char *t_value, const char *t_file, con
     myfile.close();
 }
 
-#endif // ARCH_X86
+#endif // TARGET_PC
 #endif // NDEBUG

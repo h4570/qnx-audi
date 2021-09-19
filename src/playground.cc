@@ -185,7 +185,7 @@ Texture *tex;
 void prepare()
 {
   GL_CHECK(glDisable(GL_DEPTH_TEST));
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
   tex = new Texture("/mnt/sdcard10t12/assets/car2.png", "car", TEX_TYPE_RGBA);
 #else
   tex = new Texture("/proj/car2.png", "car", TEX_TYPE_RGBA);
@@ -199,7 +199,7 @@ void prepare()
   /* load font file */
   long size;
 // TODO uzywac configa
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
   FILE *fontFile = fopen("/mnt/sdcard10t12/assets/righteous.ttf", "rb");
 #else
   FILE *fontFile = fopen("/proj/righteous.ttf", "rb");

@@ -29,14 +29,14 @@ int main(int argc, char *argv[])
   ComStack comStack;
   Screen screen(&comStack);
   Audi audi(&comStack);
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
   IpcCh8 keyboard;
 #else
   Ps2 keyboard;
 #endif
   keyboard.init();
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
   const int lmgrParams0 = 40;
   int lmgrParams[3] = {lmgrParams0, 16, 19};
   comStack.connect();
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
   }
   game.uninit();
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
   screen.updateVfb();
   audi.unknown(40);
   audi.talkToLayerManager(lmgrParams, 3, 0);
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
   keyboard.dispose();
   screen.uninit();
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
   comStack.disconnect();
 #endif
 

@@ -45,7 +45,7 @@ public:
     /** Unitialize QNX rendering stuff */
     void uninit();
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
     inline void updateVfb()
     {
         m_lmgr.updateVfb(lmgrParams0);
@@ -63,7 +63,7 @@ private:
     gf_layer_info_t m_gfLayerInfo;
     gf_3d_target_t m_gf3DTarget;
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
     static const int lmgrParams0 = 40;
     Vfb vfb;
     gf_surface_t m_gfSurface;

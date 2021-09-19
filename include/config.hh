@@ -13,7 +13,7 @@
 #define PC_ASSETS_PATH "/proj"
 #define AUDI_ASSETS_PATH "/mnt/sdcard10t12/assets"
 
-#ifdef ARCH_SHLE
+#ifdef TARGET_AUDI
 #define ASSETS_PATH AUDI_ASSETS_PATH;
 #else
 #define ASSETS_PATH PC_ASSETS_PATH;
