@@ -11,7 +11,7 @@
 // ----
 
 Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
-                                                 m_background(keyboard),
+                                                 m_background(screen),
                                                  m_lightBandit(keyboard),
                                                  m_player(keyboard)
 {

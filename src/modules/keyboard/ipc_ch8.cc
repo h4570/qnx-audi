@@ -63,21 +63,24 @@ void IpcCh8::___thread()
     while (true)
     {
         reset();
-        if (select(m_handle + 1, &m_readFds, &m_writeFds, &m_exceptFds, &m_timeout) == 1)
-        {
-            read(m_handle, m_buffer, m_bufferSize);
-            if (m_buffer[6] == 0x0 && m_buffer[7] == 0x1)
-                m_isLeftPressed = true;
-            else if (m_buffer[6] == 0x1 && m_buffer[7] == 0x0)
-                m_isRightPressed = true;
-            else // TODO: do it via else if
-                m_isExitPressed = true;
-        }
+        // TODO
+        // logMessage("Check!");
+        // if (select(m_handle + 1, &m_readFds, NULL, NULL, &m_timeout))
+        // {
+        //     logMessage("Read!");
+        read(m_handle, m_buffer, m_bufferSize);
+        if (m_buffer[6] == 0x0 && m_buffer[7] == 0x1)
+            m_isLeftPressed = true;
+        else if (m_buffer[6] == 0x1 && m_buffer[7] == 0x0)
+            m_isRightPressed = true;
+        else
+            m_isExitPressed = true;
+        // }
 
         if (!m_shouldRun)
             break;
 
-        delay(1);
+        delay(200);
     }
 }
 
@@ -86,15 +89,13 @@ void IpcCh8::connect()
     assert(!m_isConnected, "Already connected");
     m_handle = open("/dev/ipc/ch8", 0);
     assert(m_handle != -1, "Failed to open /dev/ipc/ch8");
-    FD_ZERO(&m_readFds);
-    FD_ZERO(&m_writeFds);
-    FD_ZERO(&m_exceptFds);
-    FD_SET(m_handle, &m_readFds);
+    // FD_ZERO(&m_readFds);
+    // FD_SET(m_handle, &m_readFds);
 
     // m_timeout.tv_sec = 1;
     // m_timeout.tv_usec = 0;
-    m_timeout.tv_sec = 0;
-    m_timeout.tv_usec = 200000;
+    // m_timeout.tv_sec = 0;
+    // m_timeout.tv_usec = 200000;
     m_isConnected = true;
     logMessage("Connected to /dev/ipc/ch8");
 }

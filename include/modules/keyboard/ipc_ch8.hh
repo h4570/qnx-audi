@@ -35,7 +35,7 @@ private:
     bool m_isConnected, m_shouldRun;
     int m_handle;
     char *m_buffer;
-    fd_set m_readFds, m_writeFds, m_exceptFds;
+    fd_set m_readFds;
     struct timeval m_timeout;
 
     inline void reset()

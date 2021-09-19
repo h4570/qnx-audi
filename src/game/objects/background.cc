@@ -10,12 +10,17 @@
 // Constructors/Destructors
 // ----
 
-Background::Background(Keyboard *keyboard)
+Background::Background(const Screen &screen)
     : m_animation("background", 1)
 {
     m_scale = 1.0F;
+#ifdef TARGET_AUDI
+    m_width = (GLfloat)screen.getWidth();
+    m_height = (GLfloat)screen.getHeight();
+#else
     m_width = 640.0F;
     m_height = 360.0F;
+#endif
     m_animCounter = 0;
 }
 

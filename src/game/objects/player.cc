@@ -23,6 +23,10 @@ Player::Player(Keyboard *keyboard)
     m_y = 120.0F;
     m_height = 128.0F;
     m_animCounter = 0;
+
+#ifdef TARGET_AUDI
+    m_y += 90.0F;
+#endif
 }
 
 Player::~Player()

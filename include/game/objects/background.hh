@@ -9,6 +9,7 @@
 
 #include "modules/keyboard/keyboard.hh"
 #include "models/texture.hh"
+#include "modules/screen.hh"
 #include "game/animation.hh"
 #include "game/object_2d.hh"
 #include "utils/debug.hh"
@@ -17,7 +18,7 @@ class Background : Object2D
 {
 
 public:
-    Background(Keyboard *keyboard);
+    Background(const Screen &screen);
     ~Background();
 
     void update();

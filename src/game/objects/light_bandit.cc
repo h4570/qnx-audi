@@ -22,6 +22,10 @@ LightBandit::LightBandit(Keyboard *keyboard)
     m_x = m_width * m_scale;
     m_y = 176.0F;
     m_animCounter = 0;
+
+#ifdef TARGET_AUDI
+    m_y += 90.0F;
+#endif
 }
 
 LightBandit::~LightBandit()

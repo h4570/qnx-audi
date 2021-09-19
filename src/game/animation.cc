@@ -69,11 +69,9 @@ Animation::Animation(const char *t_name, _Uint8t t_framesCount)
 Animation::~Animation()
 {
     logKeyValue("Destructing animation with name", m_name.c_str());
+    // glDeleteTextures(m_framesCount, m_textureIds); // What about this?
     for (_Uint8t i = 0; i < m_framesCount; i++)
-    {
         delete m_textures[i];
-        glDeleteTextures(1, &m_textureIds[i]);
-    }
     delete[] m_textureIds;
 }
 

@@ -70,5 +70,6 @@ int main(int argc, char *argv[])
   comStack.disconnect();
 #endif
 
+  logMessage("Exiting...");
   return 0;
 }
