@@ -17,11 +17,18 @@ Player::Player(Keyboard *keyboard)
       m_deathAnimation("hero_knight/death", 10),
       m_idleAnimation("hero_knight/idle", 8)
 {
+
+#ifdef TARGET_AUDI
+    m_y = 120.0F + 90.0F;
     m_scale = 2.0F;
+#else
+    m_scale = 1.0F;
+    m_y = 60.0F;
+#endif
+
     m_width = 128.0F;
-    m_x = -30.0F;
-    m_y = 120.0F;
     m_height = 128.0F;
+    m_x = -30.0F;
     m_animCounter = 0;
 
 #ifdef TARGET_AUDI

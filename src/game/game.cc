@@ -13,10 +13,12 @@
 Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
                                                  m_smartBackground(screen),
                                                  m_background(screen),
+                                                 m_heavyBandit(keyboard),
                                                  m_lightBandit(keyboard),
                                                  m_player(keyboard)
 {
     m_keyboard = keyboard;
+    m_initializer = 0;
 }
 
 Game::~Game() {}
@@ -59,18 +61,18 @@ void Game::init()
 
     GL_CHECK(glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST));
 }
-int test = 0;
 void Game::render()
 {
-    if (test < 2)
+    if (m_initializer < 2)
     {
         clear();
-        m_background.update();
-        test++;
+        m_initializer++;
     }
 
-    m_smartBackground.update();
+    m_background.update();
+    // m_smartBackground.update(); // The idea was to move background to initializer area and update only smartBackground
     m_lightBandit.update();
+    m_heavyBandit.update();
     m_player.update();
 }
 

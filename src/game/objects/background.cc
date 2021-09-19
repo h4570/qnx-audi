@@ -13,13 +13,14 @@
 Background::Background(const Screen &screen)
     : m_image("background")
 {
-    m_scale = 1.0F;
 #ifdef TARGET_AUDI
     m_width = (GLfloat)screen.getWidth();
     m_height = (GLfloat)screen.getHeight();
+    m_scale = 1.0F;
 #else
     m_width = 640.0F;
     m_height = 360.0F;
+    m_scale = .5F;
 #endif
 }
 

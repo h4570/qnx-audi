@@ -4,17 +4,17 @@
 # Sandro Sobczyński <sandro.sobczynski@gmail.com>
 */
 
-#include "game/objects/light_bandit.hh"
+#include "game/objects/heavy_bandit.hh"
 
 // ----
 // Constructors/Destructors
 // ----
 
-LightBandit::LightBandit(Keyboard *keyboard)
-    : m_idleAnimation("light_bandit/idle", 4),
-      m_attackAnimation("light_bandit/attack", 8),
-      m_deathAnimation("light_bandit/death", 1),
-      m_runAnimation("light_bandit/run", 8)
+HeavyBandit::HeavyBandit(Keyboard *keyboard)
+    : m_idleAnimation("heavy_bandit/idle", 4),
+      m_attackAnimation("heavy_bandit/attack", 8),
+      m_deathAnimation("heavy_bandit/death", 1),
+      m_runAnimation("heavy_bandit/run", 8)
 {
 
 #ifdef TARGET_AUDI
@@ -27,11 +27,11 @@ LightBandit::LightBandit(Keyboard *keyboard)
 
     m_width = 64.0F;
     m_height = 64.0F;
-    m_x = m_width * 2.0F * m_scale;
+    m_x = m_width * m_scale;
     m_animCounter = 0;
 }
 
-LightBandit::~LightBandit()
+HeavyBandit::~HeavyBandit()
 {
 }
 
@@ -39,8 +39,8 @@ LightBandit::~LightBandit()
 // Methods
 // ----
 
-void LightBandit::update()
+void HeavyBandit::update()
 {
     setRenderPackage();
-    m_idleAnimation.render(m_renderPackage, m_animCounter);
+    m_attackAnimation.render(m_renderPackage, m_animCounter);
 }

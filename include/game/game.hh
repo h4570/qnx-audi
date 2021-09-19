@@ -14,6 +14,7 @@
 
 #include "game/objects/background.hh"
 #include "game/objects/smart_background.hh"
+#include "game/objects/heavy_bandit.hh"
 #include "game/objects/light_bandit.hh"
 #include "game/objects/player.hh"
 
@@ -31,10 +32,12 @@ public:
     inline void clear() { GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)); }
 
 private:
+    _Uint8t m_initializer;
     Screen m_screen;
     Keyboard *m_keyboard;
 
     SmartBackground m_smartBackground;
+    HeavyBandit m_heavyBandit;
     Background m_background;
     LightBandit m_lightBandit;
     Player m_player;
