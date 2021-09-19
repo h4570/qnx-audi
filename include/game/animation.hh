@@ -27,7 +27,7 @@ private:
     GLuint *m_textureIds;
 
     static const GLfloat TEXTURE_COORDINATES[];
-    static const GLubyte TEXTURE_INDICES[];
+    static const GLubyte INDICES[];
 };
 
 #endif
