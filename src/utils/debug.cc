@@ -18,12 +18,12 @@
 // Release mode, x86
 // ----
 
-void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const char *t_value, const char *t_file, const int &t_line)((void)0);
+void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_message, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const char *t_value, const char *t_file, const int &t_line) {}
 
 #else // TARGET_PC
 
@@ -31,12 +31,12 @@ void Debug::_log(const char *t_key, const char *t_value, const char *t_file, con
 // Release mode, SHLE
 // ----
 
-void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_message, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line)((void)0);
-void Debug::_log(const char *t_key, const char *t_value, const char *t_file, const int &t_line)((void)0);
+void Debug::_assert(const bool &t_condition, const char *t_message, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_message, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const int t_value, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const unsigned int t_value, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const bool t_value, const char *t_file, const int &t_line) {}
+void Debug::_log(const char *t_key, const char *t_value, const char *t_file, const int &t_line) {}
 
 #endif // TARGET_PC
 #else  // NDEBUG
