@@ -4,8 +4,8 @@
 # Sandro Sobczyński <sandro.sobczynski@gmail.com>
 */
 
-#ifndef _QNX_AUDI_BACKGROUND_
-#define _QNX_AUDI_BACKGROUND_
+#ifndef _QNX_AUDI_SMART_BACKGROUND_
+#define _QNX_AUDI_SMART_BACKGROUND_
 
 #include "modules/keyboard/keyboard.hh"
 #include "models/texture.hh"
@@ -14,12 +14,12 @@
 #include "game/object_2d.hh"
 #include "utils/debug.hh"
 
-class Background : Object2D
+class SmartBackground : Object2D
 {
 
 public:
-    Background(const Screen &screen);
-    ~Background();
+    SmartBackground(const Screen &screen);
+    ~SmartBackground();
 
     void update();
 

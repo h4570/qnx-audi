@@ -13,6 +13,7 @@
 #include "utils/debug.hh"
 
 #include "game/objects/background.hh"
+#include "game/objects/smart_background.hh"
 #include "game/objects/light_bandit.hh"
 #include "game/objects/player.hh"
 
@@ -33,6 +34,7 @@ private:
     Screen m_screen;
     Keyboard *m_keyboard;
 
+    SmartBackground m_smartBackground;
     Background m_background;
     LightBandit m_lightBandit;
     Player m_player;

@@ -28,10 +28,6 @@ Animation::Animation(const char *t_name, _Uint8t t_framesCount)
     m_textures = new Texture *[t_framesCount];
     m_textureIds = new GLuint[t_framesCount];
 
-    GL_CHECK(glEnable(GL_TEXTURE_2D));
-    GL_CHECK(glEnable(GL_BLEND));
-    GL_CHECK(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
     for (_Uint8t i = 0; i < m_framesCount; i++)
     {
         char *iAsChar = intToChar((int)i);
@@ -78,10 +74,7 @@ const GLfloat Animation::TEXTURE_COORDINATES[] = {
     1, 1  // 3
 };
 
-const GLubyte Animation::INDICES[] = {
-    0, 1, 2, // -> 2, 0, 1
-    0, 2, 3  // -> 2, 1, 3
-};
+const GLubyte Animation::INDICES[] = {0, 1, 2, 3};
 
 void Animation::render(const RenderPackage &package, _Uint8t &animCounter)
 {
@@ -101,12 +94,13 @@ void Animation::render(const RenderPackage &package, _Uint8t &animCounter)
         package.maxX, package.maxY  // 3
     };
 
+    GL_CHECK(glEnable(GL_BLEND));
     GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_textureIds[animCounter]));
     GL_CHECK(glEnableClientState(GL_VERTEX_ARRAY));
     GL_CHECK(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
     GL_CHECK(glTexCoordPointer(2, GL_FLOAT, 0, TEXTURE_COORDINATES));
     GL_CHECK(glVertexPointer(2, GL_FLOAT, 0, vertices));
-    GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, INDICES));
+    GL_CHECK(glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_BYTE, INDICES));
 
     if (++animCounter > m_framesCount - 1)
         animCounter = 0;

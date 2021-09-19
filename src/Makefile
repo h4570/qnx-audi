@@ -10,9 +10,11 @@ QCC_OBJS =	main.o								\
 			game/objects/background.o			\
 			game/objects/light_bandit.o			\
 			game/objects/player.o				\
+			game/objects/smart_background.o		\
 			game/animation.o					\
 			game/game.o							\
 			game/object_2d.o					\
+			game/static_image.o					\
 			modules/keyboard/ipc_ch8.o			\
 			modules/keyboard/keyboard.o			\
 			modules/keyboard/ps2.o				\

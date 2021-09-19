@@ -4,14 +4,14 @@
 # Sandro Sobczyński <sandro.sobczynski@gmail.com>
 */
 
-#include "game/objects/background.hh"
+#include "game/objects/smart_background.hh"
 
 // ----
 // Constructors/Destructors
 // ----
 
-Background::Background(const Screen &screen)
-    : m_image("background")
+SmartBackground::SmartBackground(const Screen &screen)
+    : m_image("smart_background")
 {
     m_scale = 1.0F;
 #ifdef TARGET_AUDI
@@ -21,9 +21,12 @@ Background::Background(const Screen &screen)
     m_width = 640.0F;
     m_height = 360.0F;
 #endif
+    m_width /= 2.0F;
+    m_height /= 2.0F;
+    m_y += m_height;
 }
 
-Background::~Background()
+SmartBackground::~SmartBackground()
 {
 }
 
@@ -31,7 +34,7 @@ Background::~Background()
 // Methods
 // ----
 
-void Background::update()
+void SmartBackground::update()
 {
     setRenderPackage();
     m_image.render(m_renderPackage);
