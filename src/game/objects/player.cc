@@ -18,6 +18,8 @@ Player::Player(Keyboard *keyboard)
       m_idleAnimation("hero_knight/idle", 8)
 {
 
+    m_keyboard = keyboard;
+
 #ifdef TARGET_AUDI
     m_y = 120.0F + 90.0F;
     m_scale = 2.0F;
@@ -47,5 +49,11 @@ Player::~Player()
 void Player::update()
 {
     setRenderPackage();
-    m_attack1Animation.render(m_renderPackage, m_animCounter);
+    // TODO
+    if (m_keyboard->isLeftPressed())
+        m_attack2Animation.render(m_renderPackage, m_animCounter);
+    else if (m_keyboard->isRightPressed())
+        m_attack1Animation.render(m_renderPackage, m_animCounter);
+    else
+        m_idleAnimation.render(m_renderPackage, m_animCounter);
 }

@@ -24,6 +24,7 @@ public:
 
 private:
     _Uint8t m_animCounter;
+    Keyboard *m_keyboard;
 
     Animation
         m_attack1Animation,
