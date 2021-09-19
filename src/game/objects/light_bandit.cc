@@ -20,7 +20,7 @@ LightBandit::LightBandit(Keyboard *keyboard)
     m_width = 64.0F;
     m_height = 64.0F;
     m_x = m_width * m_scale;
-    m_y = m_height;
+    m_y = 176.0F;
     m_animCounter = 0;
 }
 

@@ -11,6 +11,7 @@
 // ----
 
 Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
+                                                 m_background(keyboard),
                                                  m_lightBandit(keyboard),
                                                  m_player(keyboard)
 {
@@ -36,6 +37,7 @@ void Game::render()
 {
     clear();
 
+    m_background.update();
     m_lightBandit.update();
     m_player.update();
 }

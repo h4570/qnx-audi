@@ -8,11 +8,13 @@
 #define _QNX_AUDI_GAME_
 
 #include "modules/keyboard/keyboard.hh"
-#include "game/objects/light_bandit.hh"
-#include "game/objects/player.hh"
 #include "modules/screen.hh"
 #include "models/texture.hh"
 #include "utils/debug.hh"
+
+#include "game/objects/background.hh"
+#include "game/objects/light_bandit.hh"
+#include "game/objects/player.hh"
 
 class Game
 {
@@ -31,6 +33,7 @@ private:
     Screen m_screen;
     Keyboard *m_keyboard;
 
+    Background m_background;
     LightBandit m_lightBandit;
     Player m_player;
 };
