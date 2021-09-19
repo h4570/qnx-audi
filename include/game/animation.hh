@@ -9,18 +9,19 @@
 
 #include "models/texture.hh"
 #include "utils/debug.hh"
+#include "game/render_package.hh"
 #include <GLES/egl.h>
 
-class ObjectAnimation
+class Animation
 {
 public:
-    ObjectAnimation(const char *t_name, _Uint8t t_framesCount);
-    ~ObjectAnimation();
+    Animation(const char *t_name, _Uint8t t_framesCount);
+    ~Animation();
 
-    void render(const GLfloat &minX, const GLfloat &minY, const GLfloat &maxX, const GLfloat &maxY);
+    void render(const RenderPackage &package, _Uint8t &animCounter);
 
 private:
-    _Uint8t m_animCounter, m_framesCount;
+    _Uint8t m_framesCount;
     std::string m_path, m_name;
     Texture **m_textures;
     GLuint *m_textureIds;

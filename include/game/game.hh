@@ -8,7 +8,7 @@
 #define _QNX_AUDI_GAME_
 
 #include "modules/keyboard/keyboard.hh"
-#include "game/objects/ninja_girl.hh"
+#include "game/objects/light_bandit.hh"
 #include "game/objects/player.hh"
 #include "modules/screen.hh"
 #include "models/texture.hh"
@@ -31,7 +31,7 @@ private:
     Screen m_screen;
     Keyboard *m_keyboard;
 
-    NinjaGirl m_ninjaGirl;
+    LightBandit m_lightBandit;
     Player m_player;
 };
 

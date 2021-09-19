@@ -11,7 +11,7 @@
 // ----
 
 Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
-                                                 m_ninjaGirl(keyboard),
+                                                 m_lightBandit(keyboard),
                                                  m_player(keyboard)
 {
     m_keyboard = keyboard;
@@ -36,7 +36,7 @@ void Game::render()
 {
     clear();
 
-    m_ninjaGirl.update();
+    m_lightBandit.update();
     m_player.update();
 }
 

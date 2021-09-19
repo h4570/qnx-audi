@@ -4,8 +4,8 @@
 # Sandro Sobczyński <sandro.sobczynski@gmail.com>
 */
 
-#ifndef _QNX_AUDI_PLAYER_
-#define _QNX_AUDI_PLAYER_
+#ifndef _QNX_AUDI_LIGHT_BANDIT_
+#define _QNX_AUDI_LIGHT_BANDIT_
 
 #include "modules/keyboard/keyboard.hh"
 #include "models/texture.hh"
@@ -13,24 +13,22 @@
 #include "game/object_2d.hh"
 #include "utils/debug.hh"
 
-class Player : Object2D
+class LightBandit : Object2D
 {
 
 public:
-    Player(Keyboard *keyboard);
-    ~Player();
+    LightBandit(Keyboard *keyboard);
+    ~LightBandit();
 
     void update();
 
 private:
     _Uint8t m_animCounter;
-
     Animation
-        m_attack1Animation,
-        m_attack2Animation,
-        m_attack3Animation,
+        m_idleAnimation,
+        m_attackAnimation,
         m_deathAnimation,
-        m_idleAnimation;
+        m_runAnimation;
 };
 
 #endif

@@ -11,12 +11,17 @@
 // ----
 
 Player::Player(Keyboard *keyboard)
-    : m_attackAnimation("ninja/attack", 9)
+    : m_attack1Animation("hero_knight/attack_1", 6),
+      m_attack2Animation("hero_knight/attack_2", 6),
+      m_attack3Animation("hero_knight/attack_3", 8),
+      m_deathAnimation("hero_knight/death", 10),
+      m_idleAnimation("hero_knight/idle", 8)
 {
+    m_scale = 2.0F;
     m_width = 128.0F;
+    m_x = -30.0F;
     m_height = 128.0F;
-    m_x = 0;
-    m_y = 0;
+    m_animCounter = 0;
 }
 
 Player::~Player()
@@ -29,10 +34,6 @@ Player::~Player()
 
 void Player::update()
 {
-    GLfloat minX = m_x;
-    GLfloat minY = m_y;
-    GLfloat maxX = m_x + m_width;
-    GLfloat maxY = m_y + m_height;
-
-    m_attackAnimation.render(minX, minY, maxX, maxY);
+    setRenderPackage();
+    m_attack1Animation.render(m_renderPackage, m_animCounter);
 }

@@ -4,7 +4,7 @@
 # Sandro Sobczyński <sandro.sobczynski@gmail.com>
 */
 
-#include "game/objects/object_animation.hh"
+#include "game/animation.hh"
 #include "utils/string.hh"
 #include "config.hh"
 #include <string>
@@ -13,19 +13,18 @@
 // Constructors/Destructors
 // ----
 
-const GLfloat ObjectAnimation::TEXTURE_COORDINATES[] = {
+const GLfloat Animation::TEXTURE_COORDINATES[] = {
     0, 1,
     0, 0,
     1, 0,
     1, 1};
 
-const GLubyte ObjectAnimation::TEXTURE_INDICES[] = {0, 1, 2, 0, 2, 3};
+const GLubyte Animation::TEXTURE_INDICES[] = {0, 1, 2, 0, 2, 3};
 
-ObjectAnimation::ObjectAnimation(const char *t_name, _Uint8t t_framesCount)
+Animation::Animation(const char *t_name, _Uint8t t_framesCount)
 {
-    m_animCounter = 0;
     m_name = t_name;
-    logKeyValue("Constructing object with name", m_name.c_str());
+    logKeyValue("Constructing animation with name", m_name.c_str());
     m_framesCount = t_framesCount;
     m_path = ASSETS_PATH;
     m_path += '/';
@@ -67,9 +66,9 @@ ObjectAnimation::ObjectAnimation(const char *t_name, _Uint8t t_framesCount)
     }
 }
 
-ObjectAnimation::~ObjectAnimation()
+Animation::~Animation()
 {
-    logKeyValue("Destructing object with name", m_name.c_str());
+    logKeyValue("Destructing animation with name", m_name.c_str());
     for (_Uint8t i = 0; i < m_framesCount; i++)
     {
         delete m_textures[i];
@@ -82,21 +81,21 @@ ObjectAnimation::~ObjectAnimation()
 // Methods
 // ----
 
-void ObjectAnimation::render(const GLfloat &minX, const GLfloat &minY, const GLfloat &maxX, const GLfloat &maxY)
+void Animation::render(const RenderPackage &package, _Uint8t &animCounter)
 {
     GLfloat vertices[] = {
-        minX, maxY,
-        minX, minY,
-        maxX, minY,
-        maxX, maxY};
+        package.minX, package.maxY,
+        package.minX, package.minY,
+        package.maxX, package.minY,
+        package.maxX, package.maxY};
 
-    GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_textureIds[m_animCounter]));
+    GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_textureIds[animCounter]));
     GL_CHECK(glEnableClientState(GL_VERTEX_ARRAY));
     GL_CHECK(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
     GL_CHECK(glTexCoordPointer(2, GL_FLOAT, 0, TEXTURE_COORDINATES));
     GL_CHECK(glVertexPointer(2, GL_FLOAT, 0, vertices));
     GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, TEXTURE_INDICES));
 
-    if (++m_animCounter > m_framesCount - 1)
-        m_animCounter = 0;
+    if (++animCounter > m_framesCount - 1)
+        animCounter = 0;
 }
