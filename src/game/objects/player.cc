@@ -17,8 +17,15 @@ Player::Player(Keyboard *keyboard)
       m_deathAnimation("hero_knight/death", 10),
       m_idleAnimation("hero_knight/idle", 8)
 {
-
+    m_currentAnimation = &m_idleAnimation;
     m_keyboard = keyboard;
+    m_maxHp = 100;
+    m_hp = 100;
+
+    m_attack1Animation.setAnimationState(Once);
+    m_attack2Animation.setAnimationState(Once);
+    m_attack3Animation.setAnimationState(Once);
+    m_deathAnimation.setAnimationState(Once);
 
 #ifdef TARGET_AUDI
     m_y = 120.0F + 90.0F;
@@ -48,12 +55,32 @@ Player::~Player()
 
 void Player::update()
 {
-    setRenderPackage();
-    // TODO
-    if (m_keyboard->isLeftPressed())
-        m_attack2Animation.render(m_renderPackage, m_animCounter);
-    else if (m_keyboard->isRightPressed())
-        m_attack1Animation.render(m_renderPackage, m_animCounter);
+    renderAnimation();
+}
+
+void Player::renderAnimation()
+{
+    if (!isAlive())
+    {
+        changeAnimation(&m_deathAnimation);
+        return;
+    }
     else
-        m_idleAnimation.render(m_renderPackage, m_animCounter);
+    {
+        if (m_keyboard->isLeftPressed() && m_keyboard->isRightPressed())
+            changeAnimation(&m_attack3Animation);
+        else if (m_keyboard->isLeftPressed())
+            changeAnimation(&m_attack1Animation);
+        else if (m_keyboard->isRightPressed())
+            changeAnimation(&m_attack2Animation);
+    }
+
+    setRenderPackage();
+    m_currentAnimation->render(m_renderPackage, m_animCounter);
+
+    if (isAlive() && m_currentAnimation->isFinished(m_animCounter))
+    {
+        resetAnimation();
+        m_currentAnimation = &m_idleAnimation;
+    }
 }

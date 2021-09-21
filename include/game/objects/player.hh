@@ -21,10 +21,35 @@ public:
     ~Player();
 
     void update();
+    inline _Uint8t getHp() { return m_hp; }
+    inline void reduceHp(_Uint8t value)
+    {
+        m_hp -= value;
+        if (m_hp < 0)
+            m_hp = 0;
+    }
+    inline void addHp(_Uint8t value)
+    {
+        m_hp += value;
+        if (m_hp > m_maxHp)
+            m_hp = m_maxHp;
+    }
+    inline bool isAlive() { return m_hp > 0; }
 
 private:
-    _Uint8t m_animCounter;
+    void renderAnimation();
+    inline void resetAnimation() { m_animCounter = 0; }
+    inline void changeAnimation(Animation *animation)
+    {
+        resetAnimation();
+        m_currentAnimation = animation;
+    }
+
+    _Int8t m_hp;
+    _Uint8t m_animCounter, m_maxHp;
     Keyboard *m_keyboard;
+
+    Animation *m_currentAnimation;
 
     Animation
         m_attack1Animation,

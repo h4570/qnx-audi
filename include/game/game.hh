@@ -37,8 +37,8 @@ private:
     Keyboard *m_keyboard;
 
     SmartBackground m_smartBackground;
-    HeavyBandit m_heavyBandit;
     Background m_background;
+    HeavyBandit m_heavyBandit;
     LightBandit m_lightBandit;
     Player m_player;
 };

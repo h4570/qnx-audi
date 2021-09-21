@@ -15,6 +15,7 @@
 
 Animation::Animation(const char *t_name, _Uint8t t_framesCount)
 {
+    m_state = Repeat;
     m_name = t_name;
     logKeyValue("Constructing animation with name", m_name.c_str());
     m_framesCount = t_framesCount;
@@ -102,6 +103,9 @@ void Animation::render(const RenderPackage &package, _Uint8t &animCounter)
     GL_CHECK(glVertexPointer(2, GL_FLOAT, 0, vertices));
     GL_CHECK(glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_BYTE, INDICES));
 
-    if (++animCounter > m_framesCount - 1)
-        animCounter = 0;
+    if (animCounter <= m_framesCount - 1)
+        animCounter++;
+    if (animCounter > m_framesCount - 1)
+        if (m_state == Repeat)
+            animCounter = 0;
 }
