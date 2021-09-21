@@ -7,23 +7,19 @@
 #ifndef _QNX_AUDI_LIGHT_BANDIT_
 #define _QNX_AUDI_LIGHT_BANDIT_
 
-#include "modules/keyboard/keyboard.hh"
-#include "models/texture.hh"
-#include "game/animation.hh"
-#include "game/object_2d.hh"
-#include "utils/debug.hh"
+#include "game/bandit.hh"
 
-class LightBandit : Object2D
+class LightBandit : public Bandit
 {
 
 public:
-    LightBandit(Keyboard *keyboard);
+    LightBandit();
     ~LightBandit();
 
     void update();
+    inline void printHp() { logKeyValue("Light bandit HP", m_hp); }
 
 private:
-    _Uint8t m_animCounter;
     Animation
         m_idleAnimation,
         m_attackAnimation,

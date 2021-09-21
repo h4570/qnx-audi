@@ -10,25 +10,20 @@
 // Constructors/Destructors
 // ----
 
-LightBandit::LightBandit(Keyboard *keyboard)
+LightBandit::LightBandit()
     : m_idleAnimation("light_bandit/idle", 4),
       m_attackAnimation("light_bandit/attack", 8),
       m_deathAnimation("light_bandit/death", 1),
       m_runAnimation("light_bandit/run", 8)
 {
+    m_deathAnimation.setAnimationState(Once);
+    m_currentAnimation = &m_runAnimation;
 
-#ifdef TARGET_AUDI
-    m_y = 176.0F + 90.0F;
-    m_scale = 2.0F;
-#else
-    m_scale = 1.0F;
-    m_y = 88.0F;
-#endif
-
-    m_width = 64.0F;
-    m_height = 64.0F;
-    m_x = m_width * 2.0F * m_scale;
-    m_animCounter = 0;
+    m_speed = 6.0F;
+    m_startX = 370.0F;
+    m_endX = 40.0F;
+    m_attackDamage = 10;
+    m_x = m_startX;
 }
 
 LightBandit::~LightBandit()
@@ -41,6 +36,36 @@ LightBandit::~LightBandit()
 
 void LightBandit::update()
 {
+    if (m_x >= m_endX)
+    {
+        m_currentAnimation = &m_runAnimation;
+        m_x -= m_speed;
+    }
+    else if (isNearPlayer())
+    {
+        if (!isAlive())
+        {
+            if (!m_wasDeathAnimationSet)
+            {
+                m_currentAnimation = &m_deathAnimation;
+                m_animCounter = 0;
+                m_wasDeathAnimationSet = true;
+            }
+            else if (m_deathAnimation.isFinished(m_animCounter))
+            {
+                m_wasDeathAnimationSet = false;
+                m_hp = 100;
+                m_speed += 0.3F;
+                m_attackDamage += 1;
+                m_x = m_startX;
+            }
+        }
+        else if (m_playerKilled)
+            m_currentAnimation = &m_idleAnimation;
+        else
+            m_currentAnimation = &m_attackAnimation;
+    }
+
     setRenderPackage();
-    m_idleAnimation.render(m_renderPackage, m_animCounter);
+    m_currentAnimation->render(m_renderPackage, m_animCounter);
 }

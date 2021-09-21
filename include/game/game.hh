@@ -17,6 +17,8 @@
 #include "game/objects/heavy_bandit.hh"
 #include "game/objects/light_bandit.hh"
 #include "game/objects/player.hh"
+#include "game/objects/hp_bar.hh"
+#include "game/bandit.hh"
 
 class Game
 {
@@ -32,15 +34,24 @@ public:
     inline void clear() { GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)); }
 
 private:
+    inline bool isBanditAttackTourTime() { return m_difficultyTimer > m_difficulty; }
+    void handleBanditAttack(Bandit &bandit);
+    void handleBanditDefense(Bandit &bandit);
+    void logic();
+
+    unsigned int m_difficulty, m_difficultyTimer;
     _Uint8t m_initializer;
     Screen m_screen;
     Keyboard *m_keyboard;
 
-    SmartBackground m_smartBackground;
+    HpBar m_hpBar;
+    // SmartBackground m_smartBackground;
     Background m_background;
     HeavyBandit m_heavyBandit;
     LightBandit m_lightBandit;
     Player m_player;
+
+    static const int RESOLUTION;
 };
 
 #endif

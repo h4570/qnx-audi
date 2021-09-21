@@ -10,15 +10,17 @@
 // Constructors/Destructors
 // ----
 
+const int Game::RESOLUTION = 100;
+
 Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
-                                                 m_smartBackground(screen),
+                                                 m_hpBar(screen),
                                                  m_background(screen),
-                                                 m_heavyBandit(keyboard),
-                                                 m_lightBandit(keyboard),
                                                  m_player(keyboard)
 {
     m_keyboard = keyboard;
     m_initializer = 0;
+    m_difficulty = 20 * Game::RESOLUTION;
+    m_difficultyTimer = 0;
 }
 
 Game::~Game() {}
@@ -69,7 +71,10 @@ void Game::render()
         m_initializer++;
     }
 
+    logic();
+
     m_background.update();
+    m_hpBar.update(m_player.getHp());
     // m_smartBackground.update(); // The idea was to move background to initializer area and update only smartBackground
     m_lightBandit.update();
     m_heavyBandit.update();
@@ -78,4 +83,46 @@ void Game::render()
 
 void Game::uninit()
 {
+}
+
+void Game::logic()
+{
+    handleBanditDefense(m_lightBandit);
+    handleBanditDefense(m_heavyBandit);
+
+    if (!isBanditAttackTourTime())
+    {
+        m_difficultyTimer += 100;
+        return;
+    }
+    m_difficultyTimer = 0;
+    if (m_difficulty > 0)
+        m_difficulty--;
+
+    handleBanditAttack(m_lightBandit);
+    handleBanditAttack(m_heavyBandit);
+
+    m_player.printHp();
+    m_heavyBandit.printHp();
+    m_lightBandit.printHp();
+
+    logMessage("Tour finished");
+}
+
+void Game::handleBanditAttack(Bandit &bandit)
+{
+    if (m_player.isAlive() && bandit.isNearPlayer() && bandit.isAttacking())
+        m_player.reduceHp(bandit.getDamage());
+    else if (!m_player.isAlive())
+        bandit.setPlayerKilled();
+}
+
+void Game::handleBanditDefense(Bandit &bandit)
+{
+    if (bandit.isAlive() && bandit.isNearPlayer() && m_player.isAttacking())
+    {
+        bandit.reduceHp(m_player.getDamage());
+        if (!bandit.isAlive())
+            m_player.addHp(10);
+    }
 }

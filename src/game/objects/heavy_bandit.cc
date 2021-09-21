@@ -10,25 +10,19 @@
 // Constructors/Destructors
 // ----
 
-HeavyBandit::HeavyBandit(Keyboard *keyboard)
+HeavyBandit::HeavyBandit()
     : m_idleAnimation("heavy_bandit/idle", 4),
       m_attackAnimation("heavy_bandit/attack", 8),
       m_deathAnimation("heavy_bandit/death", 1),
       m_runAnimation("heavy_bandit/run", 8)
 {
+    m_deathAnimation.setAnimationState(Once);
+    m_currentAnimation = &m_runAnimation;
 
-#ifdef TARGET_AUDI
-    m_y = 176.0F + 90.0F;
-    m_scale = 2.0F;
-#else
-    m_scale = 1.0F;
-    m_y = 88.0F;
-#endif
-
-    m_width = 64.0F;
-    m_height = 64.0F;
-    m_x = m_width * m_scale;
-    m_animCounter = 0;
+    m_startX = 350.0F;
+    m_endX = 50.0F;
+    m_attackDamage = 20;
+    m_x = m_startX;
 }
 
 HeavyBandit::~HeavyBandit()
@@ -41,6 +35,36 @@ HeavyBandit::~HeavyBandit()
 
 void HeavyBandit::update()
 {
+    if (m_x >= m_endX)
+    {
+        m_currentAnimation = &m_runAnimation;
+        m_x -= m_speed;
+    }
+    else if (isNearPlayer())
+    {
+        if (!isAlive())
+        {
+            if (!m_wasDeathAnimationSet)
+            {
+                m_currentAnimation = &m_deathAnimation;
+                m_animCounter = 0;
+                m_wasDeathAnimationSet = true;
+            }
+            else if (m_deathAnimation.isFinished(m_animCounter))
+            {
+                m_wasDeathAnimationSet = false;
+                m_hp = 100;
+                m_speed += 0.1F;
+                m_attackDamage += 2;
+                m_x = m_startX;
+            }
+        }
+        else if (m_playerKilled)
+            m_currentAnimation = &m_idleAnimation;
+        else
+            m_currentAnimation = &m_attackAnimation;
+    }
+
     setRenderPackage();
-    m_attackAnimation.render(m_renderPackage, m_animCounter);
+    m_currentAnimation->render(m_renderPackage, m_animCounter);
 }

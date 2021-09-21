@@ -21,6 +21,8 @@ Player::Player(Keyboard *keyboard)
     m_keyboard = keyboard;
     m_maxHp = 100;
     m_hp = 100;
+    m_isAttacking = false;
+    m_attackDamage = 10;
 
     m_attack1Animation.setAnimationState(Once);
     m_attack2Animation.setAnimationState(Once);
@@ -55,24 +57,28 @@ Player::~Player()
 
 void Player::update()
 {
-    renderAnimation();
-}
-
-void Player::renderAnimation()
-{
     if (!isAlive())
-    {
         changeAnimation(&m_deathAnimation);
-        return;
-    }
     else
     {
         if (m_keyboard->isLeftPressed() && m_keyboard->isRightPressed())
+        {
+            m_attackDamage = 100;
+            m_isAttacking = true;
             changeAnimation(&m_attack3Animation);
+        }
         else if (m_keyboard->isLeftPressed())
+        {
+            m_attackDamage = 10;
+            m_isAttacking = true;
             changeAnimation(&m_attack1Animation);
+        }
         else if (m_keyboard->isRightPressed())
+        {
+            m_attackDamage = 10;
+            m_isAttacking = true;
             changeAnimation(&m_attack2Animation);
+        }
     }
 
     setRenderPackage();
@@ -80,6 +86,7 @@ void Player::renderAnimation()
 
     if (isAlive() && m_currentAnimation->isFinished(m_animCounter))
     {
+        m_isAttacking = false;
         resetAnimation();
         m_currentAnimation = &m_idleAnimation;
     }

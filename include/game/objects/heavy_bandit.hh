@@ -7,23 +7,19 @@
 #ifndef _QNX_AUDI_HEAVY_BANDIT_
 #define _QNX_AUDI_HEAVY_BANDIT_
 
-#include "modules/keyboard/keyboard.hh"
-#include "models/texture.hh"
-#include "game/animation.hh"
-#include "game/object_2d.hh"
-#include "utils/debug.hh"
+#include "game/bandit.hh"
 
-class HeavyBandit : Object2D
+class HeavyBandit : public Bandit
 {
 
 public:
-    HeavyBandit(Keyboard *keyboard);
+    HeavyBandit();
     ~HeavyBandit();
 
     void update();
+    inline void printHp() { logKeyValue("Heavy bandit HP", m_hp); }
 
 private:
-    _Uint8t m_animCounter;
     Animation
         m_idleAnimation,
         m_attackAnimation,
