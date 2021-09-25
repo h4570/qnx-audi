@@ -18,6 +18,7 @@
 #include "game/objects/light_bandit.hh"
 #include "game/objects/player.hh"
 #include "game/objects/hp_bar.hh"
+#include "game/objects/score.hh"
 #include "game/bandit.hh"
 
 class Game
@@ -39,12 +40,13 @@ private:
     void handleBanditDefense(Bandit &bandit);
     void logic();
 
-    unsigned int m_difficulty, m_difficultyTimer, m_score;
+    unsigned int m_difficulty, m_difficultyTimer;
     _Uint8t m_initializer;
     Screen m_screen;
     Keyboard *m_keyboard;
 
     HpBar m_hpBar;
+    Score m_score;
     // SmartBackground m_smartBackground;
     Background m_background;
     HeavyBandit m_heavyBandit;

@@ -14,6 +14,7 @@ const int Game::RESOLUTION = 100;
 
 Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
                                                  m_hpBar(screen),
+                                                 m_score(screen),
                                                  m_background(screen),
                                                  m_player(keyboard)
 {
@@ -21,7 +22,6 @@ Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
     m_initializer = 0;
     m_difficulty = 20 * Game::RESOLUTION;
     m_difficultyTimer = 0;
-    m_score = 0;
 }
 
 Game::~Game() {}
@@ -80,6 +80,7 @@ void Game::render()
     m_lightBandit.update();
     m_heavyBandit.update();
     m_player.update();
+    m_score.show();
 }
 
 void Game::uninit()
@@ -103,9 +104,9 @@ void Game::logic()
     handleBanditAttack(m_lightBandit);
     handleBanditAttack(m_heavyBandit);
 
-    m_player.printHp();
-    m_heavyBandit.printHp();
-    m_lightBandit.printHp();
+    // m_player.printHp();
+    // m_heavyBandit.printHp();
+    // m_lightBandit.printHp();
 
     if (!m_player.isAlive() && m_keyboard->isRetryPressed())
     {
@@ -114,7 +115,7 @@ void Game::logic()
         m_lightBandit.reset();
         m_difficulty = 20 * Game::RESOLUTION;
         m_difficultyTimer = 0;
-        m_score = 0;
+        m_score.reset();
     }
 
     logMessage("Tour finished");
@@ -134,6 +135,9 @@ void Game::handleBanditDefense(Bandit &bandit)
     {
         bandit.reduceHp(m_player.getDamage());
         if (!bandit.isAlive())
+        {
+            m_score.increase();
             m_player.addHp(10);
+        }
     }
 }

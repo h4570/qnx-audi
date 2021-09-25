@@ -12,6 +12,7 @@ QCC_OBJS =	main.o								\
 			game/objects/hp_bar.o				\
 			game/objects/light_bandit.o			\
 			game/objects/player.o				\
+			game/objects/score.o				\
 			game/objects/smart_background.o		\
 			game/animation.o					\
 			game/bandit.o						\
