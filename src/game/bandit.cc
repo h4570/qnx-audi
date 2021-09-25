@@ -19,6 +19,7 @@ Bandit::Bandit()
     m_playerKilled = false;
     m_maxHp = 100;
     m_hp = 100;
+    m_startSpeed = 3.0F;
     m_speed = 3.0F;
     m_width = 64.0F;
     m_height = 64.0F;

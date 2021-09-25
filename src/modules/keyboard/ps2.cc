@@ -20,6 +20,7 @@ Ps2::Ps2()
     m_isLeftPressed = false;
     m_isRightPressed = false;
     m_isExitPressed = false;
+    m_isRetryPressed = false;
     m_shouldRun = true;
 }
 
@@ -73,18 +74,22 @@ void Ps2::___thread()
 
         _Uint8t val = in8(0x60);
 
-        if (val == 30)
+        if (val == 30) // A
             m_isLeftPressed = true;
         else if (val == 158)
             m_isLeftPressed = false;
-        else if (val == 32)
+        else if (val == 32) // D
             m_isRightPressed = true;
         else if (val == 160)
             m_isRightPressed = false;
-        else if (val == 1)
+        else if (val == 1) // ESC
             m_isExitPressed = true;
         else if (val == 129)
             m_isExitPressed = false;
+        else if (val == 28) // Enter
+            m_isRetryPressed = true;
+        else if (val == 240)
+            m_isRetryPressed = false;
 
         if (!m_shouldRun)
             break;

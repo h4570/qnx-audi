@@ -21,6 +21,7 @@ Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
     m_initializer = 0;
     m_difficulty = 20 * Game::RESOLUTION;
     m_difficultyTimer = 0;
+    m_score = 0;
 }
 
 Game::~Game() {}
@@ -105,6 +106,16 @@ void Game::logic()
     m_player.printHp();
     m_heavyBandit.printHp();
     m_lightBandit.printHp();
+
+    if (!m_player.isAlive() && m_keyboard->isRetryPressed())
+    {
+        m_player.addHp(100);
+        m_heavyBandit.reset();
+        m_lightBandit.reset();
+        m_difficulty = 20 * Game::RESOLUTION;
+        m_difficultyTimer = 0;
+        m_score = 0;
+    }
 
     logMessage("Tour finished");
 }

@@ -39,7 +39,7 @@ private:
     void handleBanditDefense(Bandit &bandit);
     void logic();
 
-    unsigned int m_difficulty, m_difficultyTimer;
+    unsigned int m_difficulty, m_difficultyTimer, m_score;
     _Uint8t m_initializer;
     Screen m_screen;
     Keyboard *m_keyboard;

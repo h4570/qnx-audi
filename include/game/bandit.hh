@@ -34,14 +34,20 @@ public:
     inline bool isAttacking() { return isNearPlayer(); }
     inline _Uint8t getDamage() { return m_attackDamage; }
     inline void setPlayerKilled() { m_playerKilled = true; }
+    inline void reset()
+    {
+        m_playerKilled = false;
+        m_x = m_startX;
+        m_attackDamage = m_startAttackDamage;
+    }
 
 protected:
     bool m_playerKilled, m_wasDeathAnimationSet;
     _Int16t m_hp;
-    _Uint8t m_animCounter, m_maxHp, m_attackDamage;
+    _Uint8t m_animCounter, m_maxHp, m_attackDamage, m_startAttackDamage;
 
     Animation *m_currentAnimation;
-    GLfloat m_speed, m_startX, m_endX;
+    GLfloat m_speed, m_startSpeed, m_startX, m_endX;
 };
 
 #endif

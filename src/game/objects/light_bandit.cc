@@ -19,10 +19,12 @@ LightBandit::LightBandit()
     m_deathAnimation.setAnimationState(Once);
     m_currentAnimation = &m_runAnimation;
 
-    m_speed = 6.0F;
     m_startX = 370.0F;
     m_endX = 40.0F;
-    m_attackDamage = 10;
+    m_startAttackDamage = 10;
+    m_startSpeed = 6.0F;
+    m_speed = m_startSpeed;
+    m_attackDamage = m_startAttackDamage;
     m_x = m_startX;
 }
 

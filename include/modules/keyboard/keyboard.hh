@@ -19,9 +19,10 @@ public:
   const bool &isLeftPressed() const { return m_isLeftPressed; };
   const bool &isRightPressed() const { return m_isRightPressed; };
   const bool &isExitPressed() const { return m_isExitPressed; };
+  const bool &isRetryPressed() const { return m_isRetryPressed; };
 
 protected:
-  bool m_isLeftPressed, m_isRightPressed, m_isExitPressed;
+  bool m_isLeftPressed, m_isRightPressed, m_isExitPressed, m_isRetryPressed;
 };
 
 #endif

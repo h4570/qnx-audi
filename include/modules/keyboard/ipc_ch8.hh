@@ -43,6 +43,7 @@ private:
         m_isLeftPressed = false;
         m_isRightPressed = false;
         m_isExitPressed = false;
+        m_isRetryPressed = false;
     };
 
     void connect();

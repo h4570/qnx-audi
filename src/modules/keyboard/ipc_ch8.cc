@@ -21,6 +21,7 @@ IpcCh8::IpcCh8()
     m_isLeftPressed = false;
     m_isRightPressed = false;
     m_isExitPressed = false;
+    m_isRetryPressed = false;
     m_shouldRun = true;
     m_buffer = new char[m_bufferSize];
     assert(m_buffer != NULL, "Out of memory!");

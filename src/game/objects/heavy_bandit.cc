@@ -21,7 +21,9 @@ HeavyBandit::HeavyBandit()
 
     m_startX = 350.0F;
     m_endX = 50.0F;
-    m_attackDamage = 20;
+    m_startAttackDamage = 20;
+    m_speed = m_startSpeed;
+    m_attackDamage = m_startAttackDamage;
     m_x = m_startX;
 }
 
