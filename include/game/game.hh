@@ -28,9 +28,8 @@ public:
     Game(Screen &screen, Keyboard *keyboard);
     ~Game();
 
-    void init();
+    void setup();
     void render();
-    void uninit();
 
     inline void clear() { GL_CHECK(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)); }
 
@@ -41,7 +40,6 @@ private:
     void logic();
 
     unsigned int m_difficulty, m_difficultyTimer;
-    _Uint8t m_initializer;
     Screen m_screen;
     Keyboard *m_keyboard;
 

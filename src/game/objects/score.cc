@@ -22,19 +22,21 @@ Score::Score(const Screen &screen)
       m_1("n1"),
       m_0("n0")
 {
-    m_score = 0;
 #ifdef TARGET_AUDI
     m_width = 64.0F;
     m_height = 64.0F;
-    m_scale = .2F;
+    m_scale = .6F;
+    m_startX = 720.0F;
+    m_y = 15.0F;
 #else
     m_width = 64.0F;
     m_height = 64.0F;
     m_scale = .2F;
-#endif
     m_startX = 290.0F;
-    m_x = m_startX;
     m_y = 5.0F;
+#endif
+    m_score = 0;
+    m_x = m_startX;
 }
 
 Score::~Score()

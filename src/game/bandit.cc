@@ -27,8 +27,8 @@ Bandit::Bandit()
     m_animCounter = 0;
 
 #ifdef TARGET_AUDI
-    m_y = 176.0F + 90.0F;
-    m_scale = 2.0F;
+    m_y = 280.0F;
+    m_scale = 1.8F;
 #else
     m_scale = 1.0F;
     m_y = 88.0F;

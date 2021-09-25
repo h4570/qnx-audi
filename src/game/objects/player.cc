@@ -30,7 +30,7 @@ Player::Player(Keyboard *keyboard)
     m_deathAnimation.setAnimationState(Once);
 
 #ifdef TARGET_AUDI
-    m_y = 120.0F + 90.0F;
+    m_y = 220.0F;
     m_scale = 2.0F;
 #else
     m_scale = 1.0F;
@@ -41,10 +41,6 @@ Player::Player(Keyboard *keyboard)
     m_height = 128.0F;
     m_x = -30.0F;
     m_animCounter = 0;
-
-#ifdef TARGET_AUDI
-    m_y += 90.0F;
-#endif
 }
 
 Player::~Player()

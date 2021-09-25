@@ -39,12 +39,14 @@ public:
         m_playerKilled = false;
         m_x = m_startX;
         m_attackDamage = m_startAttackDamage;
+        m_speed = m_startSpeed;
     }
 
 protected:
     bool m_playerKilled, m_wasDeathAnimationSet;
     _Int16t m_hp;
-    _Uint8t m_animCounter, m_maxHp, m_attackDamage, m_startAttackDamage;
+    _Uint8t m_animCounter;
+    _Uint16t m_maxHp, m_attackDamage, m_startAttackDamage;
 
     Animation *m_currentAnimation;
     GLfloat m_speed, m_startSpeed, m_startX, m_endX;

@@ -58,22 +58,41 @@ void IpcCh8::dispose()
     disconnect();
 }
 
+#include "utils/string.hh"
+
 void IpcCh8::___thread()
 {
     assert(m_isConnected, "Not connected");
     while (true)
     {
         reset();
-        // TODO
+        // TODO: We cant make it non blocking via select()
         // logMessage("Check!");
         // if (select(m_handle + 1, &m_readFds, NULL, NULL, &m_timeout))
         // {
         //     logMessage("Read!");
         read(m_handle, m_buffer, m_bufferSize);
-        if (m_buffer[6] == 0x0 && m_buffer[7] == 0x1)
+
+        // Snippet: If we want to check the data
+        // for (int i = 0; i < m_bufferSize; i++)
+        //     logKeyValue(intToChar(i), m_buffer[i]);
+
+        _Int16t leftMovements = m_buffer[7];
+        _Int16t rightMovements = m_buffer[6];
+        _Int16t leftVolMovements = m_buffer[5];
+        _Int16t rightVolMovements = m_buffer[4];
+
+        if (leftMovements)
             m_isLeftPressed = true;
-        else if (m_buffer[6] == 0x1 && m_buffer[7] == 0x0)
+        else if (rightMovements)
             m_isRightPressed = true;
+        else if (leftVolMovements)
+            m_isRetryPressed = true;
+        else if (rightVolMovements) // TODO: Hack for super attack.
+        {
+            m_isLeftPressed = true;
+            m_isRightPressed = true;
+        }
         else
             m_isExitPressed = true;
         // }

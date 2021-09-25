@@ -27,12 +27,12 @@ public:
     void render(const RenderPackage &package, _Uint8t &animCounter);
     inline void setAnimationState(const AnimationState state) { m_state = state; }
     inline AnimationState getAnimationState() const { return m_state; }
-    inline const _Uint8t &getFramesCount() const { return m_framesCount; }
+    inline const _Uint16t &getFramesCount() const { return m_framesCount; }
     inline bool isFinished(_Uint8t &animCounter) const { return animCounter >= m_framesCount - 1; }
 
 private:
     AnimationState m_state;
-    _Uint8t m_framesCount;
+    _Uint16t m_framesCount;
     std::string m_path, m_name;
     Texture **m_textures;
     GLuint *m_textureIds;

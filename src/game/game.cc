@@ -19,7 +19,6 @@ Game::Game(Screen &screen, Keyboard *keyboard) : m_screen(screen),
                                                  m_player(keyboard)
 {
     m_keyboard = keyboard;
-    m_initializer = 0;
     m_difficulty = 20 * Game::RESOLUTION;
     m_difficultyTimer = 0;
 }
@@ -30,7 +29,7 @@ Game::~Game() {}
 // Methods
 // ----
 
-void Game::init()
+void Game::setup()
 {
     GL_CHECK(glMatrixMode(GL_PROJECTION));
     GL_CHECK(glLoadIdentity());
@@ -66,25 +65,15 @@ void Game::init()
 }
 void Game::render()
 {
-    if (m_initializer < 2)
-    {
-        clear();
-        m_initializer++;
-    }
-
     logic();
 
     m_background.update();
     m_hpBar.update(m_player.getHp());
+    m_score.show();
+    m_player.update();
     // m_smartBackground.update(); // The idea was to move background to initializer area and update only smartBackground
     m_lightBandit.update();
     m_heavyBandit.update();
-    m_player.update();
-    m_score.show();
-}
-
-void Game::uninit()
-{
 }
 
 void Game::logic()
@@ -118,7 +107,7 @@ void Game::logic()
         m_score.reset();
     }
 
-    logMessage("Tour finished");
+    // logMessage("Tour finished");
 }
 
 void Game::handleBanditAttack(Bandit &bandit)

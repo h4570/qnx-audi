@@ -19,8 +19,14 @@ LightBandit::LightBandit()
     m_deathAnimation.setAnimationState(Once);
     m_currentAnimation = &m_runAnimation;
 
-    m_startX = 370.0F;
+#ifdef TARGET_AUDI
+    m_endX = 80.0F;
+    m_startX = 770.0F;
+#else
     m_endX = 40.0F;
+    m_startX = 370.0F;
+#endif
+
     m_startAttackDamage = 10;
     m_startSpeed = 6.0F;
     m_speed = m_startSpeed;

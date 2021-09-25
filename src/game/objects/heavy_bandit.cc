@@ -19,8 +19,14 @@ HeavyBandit::HeavyBandit()
     m_deathAnimation.setAnimationState(Once);
     m_currentAnimation = &m_runAnimation;
 
-    m_startX = 350.0F;
+#ifdef TARGET_AUDI
+    m_endX = 90.0F;
+    m_startX = 750.0F;
+#else
     m_endX = 50.0F;
+    m_startX = 350.0F;
+#endif
+
     m_startAttackDamage = 20;
     m_speed = m_startSpeed;
     m_attackDamage = m_startAttackDamage;

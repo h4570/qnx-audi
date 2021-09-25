@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
   Game game(screen, &keyboard);
 
-  game.init();
+  game.setup();
   while (true)
   {
     if (keyboard.isExitPressed())
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     eglWaitGL();
     eglSwapBuffers(screen.Display, screen.Surface);
   }
-  game.uninit();
+  logMessage("Exiting...");
 
 #ifdef TARGET_AUDI
   screen.updateVfb();
@@ -70,6 +70,6 @@ int main(int argc, char *argv[])
   comStack.disconnect();
 #endif
 
-  logMessage("Exiting...");
+  logMessage("Exit");
   return 0;
 }

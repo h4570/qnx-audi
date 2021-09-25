@@ -24,9 +24,11 @@ HpBar::HpBar(const Screen &screen)
       m_0("0hp")
 {
 #ifdef TARGET_AUDI
+    m_y = 30.0F;
+    m_x = 10.0F;
     m_width = 256.0F;
     m_height = 64.0F;
-    m_scale = .5F;
+    m_scale = 1.0F;
 #else
     m_width = 256.0F;
     m_height = 64.0F;
