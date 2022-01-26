@@ -68,10 +68,10 @@ Contributions are what make the open source community such an amazing place to b
 ## License  
 I do not want to expose any company to potential losses, therefore this repository is not licensed so no commercial use is allowed.
 
-Project Link: [https://github.com/h4570/tyra](https://github.com/h4570/tyra)  
+Project Link: [https://github.com/h4570/qnx-audi](https://github.com/h4570/qnx-audi)  
 Sandro Sobczyński - sandro.sobczynski@gmail.com  
 [![LinkedIn][linkedin-shield]](https://linkedin.com/in/sandro-sobczyński-28820b15a)  
   
-[contributors-shield]: https://img.shields.io/github/contributors/h4570/tyra.svg?style=flat-square  
-[contributors-url]: https://github.com/h4570/tyra/graphs/contributors 
+[contributors-shield]: https://img.shields.io/github/contributors/h4570/qnx-audi.svg?style=flat-square  
+[contributors-url]: https://github.com/h4570/qnx-audi/graphs/contributors 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555  
