@@ -1,5 +1,3 @@
-[![MIT License][license-shield]][license-url]
-
 <br />
 
 <p align="center">
@@ -68,8 +66,7 @@ Contributions are what make the open source community such an amazing place to b
 <br />
 
 ## License  
-
-Distributed under the TODO License. See `LICENSE` for more information. 
+I do not want to expose any company to potential losses, therefore this repository is not licensed so no commercial use is allowed.
 
 Project Link: [https://github.com/h4570/tyra](https://github.com/h4570/tyra)  
 Sandro Sobczyński - sandro.sobczynski@gmail.com  
@@ -78,5 +75,3 @@ Sandro Sobczyński - sandro.sobczynski@gmail.com
 [contributors-shield]: https://img.shields.io/github/contributors/h4570/tyra.svg?style=flat-square  
 [contributors-url]: https://github.com/h4570/tyra/graphs/contributors 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555  
-[license-shield]: https://img.shields.io/github/license/h4570/qnx-audi.svg?style=flat-square  
-[license-url]: https://github.com/h4570/tyra/blob/master/LICENSE  
