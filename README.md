@@ -54,8 +54,6 @@ To build this project you need to mix couple of versions of QNX SDK.
 From what I remember it is 6.3.2 + 6.4.0 + 6.5.0.  
 In the future, there will be tutorial, how to compile this project.  
 
-<br />
-
 ## Contributing 
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**. 
