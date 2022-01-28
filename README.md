@@ -19,6 +19,7 @@
   </p>
 </p>  
 
+#### Zarzuć gwiazdką synu. Będę wdzięczny :D  
 [![Stargazers repo roster for h4570/qnx-audi](https://reporoster.com/stars/h4570/qnx-audi)](https://github.com/h4570/qnx-audi/stargazers)
 
 ### Description
