@@ -10,7 +10,7 @@
   <p align="center">
     First game for Audi's MMI system.
     <br />
-    <a href="https://www.youtube.com/"><strong>Video (PL) »</strong></a>
+    <a href="https://www.youtube.com/watch?v=EoDo73e9ne8"><strong>Video (PL) »</strong></a>
     <br />
     <br />
     <a href="https://github.com/h4570/qnx-audi/issues">Report Bug</a>
