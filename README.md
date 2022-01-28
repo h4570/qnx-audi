@@ -66,10 +66,13 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/amazing-feature`)  
 5. Open a Pull Request  
 
-<br />
+## Credits
+- 2D assets - https://sventhole.itch.io/bandits  
 
 ## License  
 I do not want to expose any company to potential losses, therefore this repository is not licensed so no commercial use is allowed.
+
+<br />
 
 Project Link: [https://github.com/h4570/qnx-audi](https://github.com/h4570/qnx-audi)  
 Sandro Sobczyński - sandro.sobczynski@gmail.com  
