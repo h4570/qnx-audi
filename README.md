@@ -19,6 +19,8 @@
   </p>
 </p>  
 
+[![Stargazers repo roster for h4570/qnx-audi](https://reporoster.com/stars/h4570/qnx-audi)](https://github.com/h4570/qnx-audi/stargazers)
+
 ### Description
 QNX-Audi is a simple 2D game built for Audi's MMI 3G+.  
 To run this game you must simply insert your SD card into Audi car (you can check video above).  
