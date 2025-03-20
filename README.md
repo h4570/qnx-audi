@@ -1,11 +1,11 @@
 <br />
-
+  <h3 align="center">POC - QNX Audi</h3>  
 <p align="center">
+
+
   <a href="https://github.com/h4570/qnx-audi">
     <img src="https://raw.githubusercontent.com/h4570/qnx-audi/master/docs/presentation.gif" alt="Presentation" width="500px" height="auto">
   </a>
-
-  <h3 align="center">POC - QNX Audi</h3>
 
   <p align="center">
     First game for Audi's MMI system.
