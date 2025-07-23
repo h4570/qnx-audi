@@ -72,6 +72,7 @@ I do not want to expose any company to potential losses, therefore this reposito
 
 <br />
 
+Check my blog at <a href="https://hasto.pl">hasto.pl</a>  
 Project Link: [https://github.com/h4570/qnx-audi](https://github.com/h4570/qnx-audi)  
 Sandro Sobczyński - sandro.sobczynski@gmail.com  
 [![LinkedIn][linkedin-shield]](https://linkedin.com/in/sandro-sobczyński-28820b15a)  
